@@ -1,0 +1,18 @@
+Voici mon projet java de création d'une cité universitaire, j'aimerais que tu fasse la partie graphique avec swing.
+Utilise les captures d'écrans pour la disposition mais garde un style swing simple pour le moment. L'architecture à ajouteer est:
+MainApplication.java - Point d'entrée principal de l'application
+MainFrame.java - Fenêtre principale contenant les différents écrans
+MenuPanel.java - Barre de menu supérieure (Maison, Etudiant, Resto U)
+HomePanel.java - Écran d'accueil
+MaisonListPanel.java - Liste des maisons
+MaisonAddPanel.java - Formulaire d'ajout d'une maison
+MaisonDetailPanel.java - Détails d'une maison
+MaisonEtudiantAddPanel.java - Ajout d'étudiant à une maison
+EtudiantListPanel.java - Liste des étudiants
+EtudiantDetailPanel.java - Détails d'un étudiant
+EtudiantAddPanel.java - Formulaire d'ajout d'un étudiant
+RestaurantListPanel.java - Liste des restaurants
+RestaurantDetailPanel.java - Détails d'un restaurant
+MenuDetailPanel.java - Détails d'un menu
+UIUtils.java - Classe utilitaire pour les composants graphiques communs
+Fait les fichiers :
