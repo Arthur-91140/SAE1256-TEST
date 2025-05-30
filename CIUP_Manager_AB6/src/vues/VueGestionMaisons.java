@@ -54,6 +54,11 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     //-----------------------------
     // CONSTRUCTEUR
     //-----------------------------
+    
+    /**
+     * Construit une nouvelle vue de gestion des maisons.
+     * Initialise les composants avec des onglets séparés pour chaque type de maison.
+     */
     public VueGestionMaisons() {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createTitledBorder("Gestion des Maisons"));
@@ -66,6 +71,10 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     // MÉTHODES D'INITIALISATION
     //-----------------------------
     
+    /**
+     * Initialise tous les composants graphiques de la vue.
+     * Crée les listes, zones de texte et formulaires pour chaque type de maison.
+     */
     private void initialiserComposants() {
         // Création des modèles de listes
         modeleMaisonsEtudiants = new DefaultListModel<>();
@@ -115,6 +124,10 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         boutonVoirDetails.setActionCommand(ACTION_VOIR_DETAILS);
     }
     
+    /**
+     * Configure la disposition des composants avec des onglets.
+     * Crée un onglet pour les maisons d'étudiants et un pour les maisons internationales.
+     */
     private void configurerLayout() {
         ongletsMaisons = new JTabbedPane();
         
@@ -129,6 +142,12 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         add(ongletsMaisons, BorderLayout.CENTER);
     }
     
+    /**
+     * Crée le panneau pour l'onglet des maisons d'étudiants.
+     * Configure la liste, la zone de détails et le formulaire d'ajout.
+     * 
+     * @return Le panneau configuré pour les maisons d'étudiants
+     */
     private JPanel creerPanneauMaisonsEtudiants() {
         JPanel panneau = new JPanel(new BorderLayout());
         
@@ -165,6 +184,12 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         return panneau;
     }
     
+    /**
+     * Crée le panneau pour l'onglet des maisons internationales.
+     * Configure la liste, la zone de détails et le formulaire d'ajout.
+     * 
+     * @return Le panneau configuré pour les maisons internationales
+     */
     private JPanel creerPanneauMaisonsInternationales() {
         JPanel panneau = new JPanel(new BorderLayout());
         
@@ -201,6 +226,12 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         return panneau;
     }
     
+    /**
+     * Crée le formulaire d'ajout pour les maisons d'étudiants.
+     * Inclut les champs spécifiques comme nationalité et nombre de chambres.
+     * 
+     * @return Le panneau contenant le formulaire d'ajout
+     */
     private JPanel creerFormulaireAjoutMaisonEtudiant() {
         JPanel formulaire = new JPanel(new GridBagLayout());
         formulaire.setBorder(BorderFactory.createTitledBorder("Ajouter une Maison d'Étudiants"));
@@ -246,6 +277,12 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         return formulaire;
     }
     
+    /**
+     * Crée le formulaire d'ajout pour les maisons internationales.
+     * Formulaire simplifié avec les champs de base.
+     * 
+     * @return Le panneau contenant le formulaire d'ajout
+     */
     private JPanel creerFormulaireAjoutMaisonInternationale() {
         JPanel formulaire = new JPanel(new GridBagLayout());
         formulaire.setBorder(BorderFactory.createTitledBorder("Ajouter une Maison Internationale"));
@@ -284,7 +321,10 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     //-----------------------------
     
     /**
-     * Met à jour la liste des maisons d'étudiants
+     * Met à jour la liste des maisons d'étudiants.
+     * Affiche le nom, la nationalité et l'occupation de chaque maison.
+     * 
+     * @param maisons La liste des maisons d'étudiants à afficher
      */
     public void mettreAJourMaisonsEtudiants(ArrayList<MaisonEtudiant> maisons) {
         modeleMaisonsEtudiants.clear();
@@ -297,7 +337,10 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Met à jour la liste des maisons internationales
+     * Met à jour la liste des maisons internationales.
+     * Affiche le nom et le nombre de restaurations de chaque maison.
+     * 
+     * @param maisons La liste des maisons internationales à afficher
      */
     public void mettreAJourMaisonsInternationales(ArrayList<MaisonInternationale> maisons) {
         modeleMaisonsInternationales.clear();
@@ -309,7 +352,10 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Affiche les détails d'une maison d'étudiants
+     * Affiche les détails d'une maison d'étudiants.
+     * Montre toutes les informations et la liste des étudiants résidents.
+     * 
+     * @param maison La maison d'étudiants dont afficher les détails
      */
     public void afficherDetailsMaisonEtudiant(MaisonEtudiant maison) {
         if (maison != null) {
@@ -333,7 +379,10 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Affiche les détails d'une maison internationale
+     * Affiche les détails d'une maison internationale.
+     * Montre les informations générales et la liste des restaurations.
+     * 
+     * @param maison La maison internationale dont afficher les détails
      */
     public void afficherDetailsMaisonInternationale(MaisonInternationale maison) {
         if (maison != null) {
@@ -353,7 +402,8 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Vide le formulaire
+     * Vide tous les formulaires de la vue.
+     * Remet à zéro tous les champs de saisie des deux types de maisons.
      */
     public void viderFormulaire() {
         champNomMaisonEtudiant.setText("");
@@ -370,14 +420,30 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     // ACCESSEURS
     //-----------------------------
     
+    /**
+     * Obtient la liste des maisons d'étudiants.
+     * 
+     * @return La JList affichant les maisons d'étudiants
+     */
     public JList<String> getListeMaisonsEtudiants() {
         return listeMaisonsEtudiants;
     }
     
+    /**
+     * Obtient la liste des maisons internationales.
+     * 
+     * @return La JList affichant les maisons internationales
+     */
     public JList<String> getListeMaisonsInternationales() {
         return listeMaisonsInternationales;
     }
     
+    /**
+     * Obtient le champ de saisie du nom de maison.
+     * Retourne le champ approprié selon l'onglet actif.
+     * 
+     * @return Le champ de texte pour le nom de la maison
+     */
     public JTextField getChampNomMaison() {
         // Retourne le champ approprié selon l'onglet actif
         if (ongletsMaisons.getSelectedIndex() == 0) {
@@ -387,6 +453,12 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         }
     }
     
+    /**
+     * Obtient le champ de saisie de la localisation.
+     * Retourne le champ approprié selon l'onglet actif.
+     * 
+     * @return Le champ de texte pour la localisation
+     */
     public JTextField getChampLocalisation() {
         // Retourne le champ approprié selon l'onglet actif
         if (ongletsMaisons.getSelectedIndex() == 0) {
@@ -396,6 +468,13 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         }
     }
     
+
+	/**
+	 * Obtient le champ de saisie du directeur.
+	 * Retourne le champ approprié selon l'onglet actif.
+	 * 
+	 * @return Le champ de texte pour le nom du directeur
+	 */
     public JTextField getChampDirecteur() {
         // Retourne le champ approprié selon l'onglet actif
         if (ongletsMaisons.getSelectedIndex() == 0) {
@@ -405,33 +484,96 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         }
     }
     
+    /**
+     * Obtient le champ de saisie de la nationalité.
+     * Spécifique aux maisons d'étudiants.
+     * 
+     * @return Le champ de texte pour la nationalité
+     */
     public JTextField getChampNationalite() {
         return champNationalite;
     }
     
+    /**
+     * Obtient le champ de saisie du nombre de chambres.
+     * Spécifique aux maisons d'étudiants.
+     * 
+     * @return Le champ de texte pour le nombre de chambres
+     */
     public JTextField getChampNombreChambres() {
         return champNombreChambres;
     }
     
+
+	/**
+	 * Obtient le bouton d'ajout de maison d'étudiants.
+	 * 
+	 * @return Le bouton pour ajouter une maison d'étudiants
+	 */
     public JButton getBoutonAjouterMaisonEtudiant() {
         return boutonAjouterMaisonEtudiant;
     }
     
+
+	/**
+	 * Obtient le bouton d'ajout de maison internationale.
+	 * 
+	 * @return Le bouton pour ajouter une maison internationale
+	 */
     public JButton getBoutonAjouterMaisonInternationale() {
         return boutonAjouterMaisonInternationale;
     }
     
+    /**
+     * Obtient le champ nom spécifique aux maisons d'étudiants.
+     * 
+     * @return Le champ de texte pour le nom des maisons d'étudiants
+     */
     public JTextField getChampNomMaisonEtudiant() { return champNomMaisonEtudiant; }
+    
+    /**
+     * Obtient le champ localisation spécifique aux maisons d'étudiants.
+     * 
+     * @return Le champ de texte pour la localisation des maisons d'étudiants
+     */
     public JTextField getChampLocalisationEtudiant() { return champLocalisationEtudiant; }
+    
+    /**
+     * Obtient le champ directeur spécifique aux maisons d'étudiants.
+     * 
+     * @return Le champ de texte pour le directeur des maisons d'étudiants
+     */
     public JTextField getChampDirecteurEtudiant() { return champDirecteurEtudiant; }
+    
+    /**
+     * Obtient le champ nom spécifique aux maisons internationales.
+     * 
+     * @return Le champ de texte pour le nom des maisons internationales
+     */
     public JTextField getChampNomMaisonInt() { return champNomMaisonInt; }
+    
+    /**
+     * Obtient le champ localisation spécifique aux maisons internationales.
+     * 
+     * @return Le champ de texte pour la localisation des maisons internationales
+     */
     public JTextField getChampLocalisationInt() { return champLocalisationInt; }
+    
+    /**
+     * Obtient le champ directeur spécifique aux maisons internationales.
+     * 
+     * @return Le champ de texte pour le directeur des maisons internationales
+     */
     public JTextField getChampDirecteurInt() { return champDirecteurInt; }
     
     //-----------------------------
     // IMPLÉMENTATION INTERFACE
     //-----------------------------
     
+    /**
+     * Redessine la vue en forçant la mise à jour graphique.
+     * Implémentation de l'interface InterfaceVue.
+     */
     @Override
     public void redessiner() {
         repaint();

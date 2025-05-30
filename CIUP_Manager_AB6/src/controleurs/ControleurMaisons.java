@@ -8,7 +8,13 @@ import vues.*;
 import citeU.*;
 
 /**
- * Contrôleur pour la gestion des maisons
+ * Contrôleur pour la gestion des maisons étudiantes et internationales.
+ * 
+ * Cette classe implémente le pattern MVC en gérant les interactions entre
+ * le modèle de données (GestionnaireCIUP) et la vue (VueGestionMaisons).
+ * Elle permet l'ajout et la sélection des maisons étudiantes (spécialisées
+ * par nationalité) et des maisons internationales.
+ * 
  * @author Maxence Bailly
  */
 public class ControleurMaisons implements ActionListener, ListSelectionListener {
@@ -22,6 +28,16 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     //-----------------------------
     // CONSTRUCTEUR
     //-----------------------------
+
+    /**
+     * Construit un nouveau contrôleur pour la gestion des maisons.
+     * 
+     * Initialise les références au modèle et à la vue, configure les écouteurs
+     * d'événements et met à jour l'affichage initial.
+     * 
+     * @param modele Le gestionnaire CIUP contenant les données
+     * @param vue La vue pour l'interface de gestion des maisons
+     */
     public ControleurMaisons(GestionnaireCIUP modele, VueGestionMaisons vue) {
         this.modele = modele;
         this.vue = vue;
@@ -34,6 +50,12 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     // MÉTHODES D'INITIALISATION
     //-----------------------------
     
+    /**
+     * Configure les écouteurs d'événements pour l'interface utilisateur.
+     * 
+     * Associe les actions des boutons d'ajout et la sélection dans les listes
+     * des maisons étudiantes et internationales aux méthodes correspondantes.
+     */
     private void configurerEcouteurs() {
         // Écouteurs pour les boutons
         vue.getBoutonAjouterMaisonEtudiant().addActionListener(this);
@@ -48,6 +70,14 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     // GESTION DES ÉVÉNEMENTS
     //-----------------------------
     
+    /**
+     * Gère les événements d'action déclenchés par les boutons.
+     * 
+     * Dirige l'exécution vers la méthode appropriée selon le type de maison
+     * à ajouter (maison étudiante ou maison internationale).
+     * 
+     * @param e L'événement d'action contenant la commande à exécuter
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
@@ -62,6 +92,14 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
         }
     }
     
+    /**
+     * Gère les changements de sélection dans les listes de maisons.
+     * 
+     * Identifie quelle liste a été modifiée (maisons étudiantes ou internationales)
+     * et affiche les détails de la maison sélectionnée dans le panneau approprié.
+     * 
+     * @param e L'événement de changement de sélection
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
@@ -86,6 +124,13 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     // MÉTHODES PRIVÉES
     //-----------------------------
     
+    /**
+     * Ajoute une nouvelle maison étudiante au système.
+     * 
+     * Valide les données du formulaire (nom, nationalité, nombre de chambres,
+     * localisation, directeur), crée une nouvelle maison étudiante et l'ajoute
+     * au modèle. Gère la conversion du nombre de chambres en entier.
+     */
     private void ajouterMaisonEtudiant() {
         if (validerFormulaireMaisonEtudiant()) {
             // Récupérer les bonnes valeurs depuis les bons champs
@@ -118,6 +163,12 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
         }
     }
     
+    /**
+     * Ajoute une nouvelle maison internationale au système.
+     * 
+     * Valide les données du formulaire (nom, localisation, directeur),
+     * crée une nouvelle maison internationale et l'ajoute au modèle.
+     */
     private void ajouterMaisonInternationale() {
         if (validerFormulaireMaisonInternationale()) {
             // Récupérer les bonnes valeurs depuis les bons champs
@@ -139,6 +190,14 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
         }
     }
     
+    /**
+     * Valide les données saisies pour une maison étudiante.
+     * 
+     * Vérifie que tous les champs obligatoires sont remplis et que
+     * le nombre de chambres est un entier positif.
+     * 
+     * @return true si toutes les validations passent, false sinon
+     */
     private boolean validerFormulaireMaisonEtudiant() {
         if (vue.getChampNomMaisonEtudiant().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vue, 
@@ -200,6 +259,14 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
         return true;
     }
     
+    /**
+     * Valide les données saisies pour une maison internationale.
+     * 
+     * Vérifie que tous les champs obligatoires (nom, localisation, directeur)
+     * sont remplis.
+     * 
+     * @return true si toutes les validations passent, false sinon
+     */
     private boolean validerFormulaireMaisonInternationale() {
         if (vue.getChampNomMaisonInt().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vue, 
@@ -233,7 +300,10 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     //-----------------------------
     
     /**
-     * Met à jour la vue complète
+     * Met à jour l'ensemble de l'interface utilisateur.
+     * 
+     * Actualise les listes des maisons étudiantes et internationales
+     * et redessine l'interface pour refléter les dernières modifications.
      */
     public void mettreAJourVue() {
         vue.mettreAJourMaisonsEtudiants(modele.getMaisonsEtudiants());

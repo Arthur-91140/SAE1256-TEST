@@ -45,6 +45,11 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     //-----------------------------
     // CONSTRUCTEUR
     //-----------------------------
+    
+    /**
+     * Construit une nouvelle vue de gestion des étudiants.
+     * Initialise tous les composants graphiques et configure le layout.
+     */
     public VueGestionEtudiants() {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createTitledBorder("Gestion des Étudiants"));
@@ -57,6 +62,10 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     // MÉTHODES D'INITIALISATION
     //-----------------------------
     
+    /**
+     * Initialise tous les composants graphiques de la vue.
+     * Crée le tableau, les champs de formulaire et les boutons avec leurs actions.
+     */
     private void initialiserComposants() {
         // Création du tableau
         String[] colonnes = {"Nom", "Prénom", "Nationalité", "Maison"};
@@ -96,6 +105,10 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
         boutonRechercher.setActionCommand(ACTION_RECHERCHER);
     }
     
+    /**
+     * Configure la disposition des composants dans la vue.
+     * Utilise JSplitPane pour séparer le tableau des étudiants du formulaire.
+     */
     private void configurerLayout() {
         // Panneau principal avec JSplitPane
         JSplitPane splitPane = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
@@ -173,7 +186,10 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     //-----------------------------
     
     /**
-     * Met à jour le tableau avec la liste des étudiants
+     * Met à jour le tableau avec la liste des étudiants.
+     * Vide le tableau existant et ajoute tous les étudiants de la liste.
+     * 
+     * @param etudiants La liste des étudiants à afficher
      */
     public void mettreAJourTableau(ArrayList<Etudiant> etudiants) {
         modeleTable.setRowCount(0);
@@ -193,7 +209,10 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Met à jour la liste des maisons dans la combobox
+     * Met à jour la liste des maisons dans la combobox.
+     * Affiche le nom de chaque maison avec le nombre de places disponibles.
+     * 
+     * @param maisons La liste des maisons à afficher
      */
     public void mettreAJourComboMaisons(ArrayList<MaisonEtudiant> maisons) {
         comboMaisons.removeAllItems();
@@ -206,7 +225,10 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Remplit le formulaire avec les données de l'étudiant sélectionné
+     * Remplit le formulaire avec les données de l'étudiant sélectionné.
+     * Met à jour tous les champs du formulaire avec les informations de l'étudiant.
+     * 
+     * @param etudiant L'étudiant dont les données doivent être affichées
      */
     public void remplirFormulaire(Etudiant etudiant) {
         if (etudiant != null) {
@@ -227,7 +249,8 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Vide le formulaire
+     * Vide tous les champs du formulaire.
+     * Remet à zéro tous les champs de saisie et la sélection de la combobox.
      */
     public void viderFormulaire() {
         champNom.setText("");
@@ -237,7 +260,9 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Obtient l'étudiant sélectionné dans le tableau
+     * Obtient l'index de l'étudiant sélectionné dans le tableau.
+     * 
+     * @return L'index de la ligne sélectionnée, -1 si aucune sélection
      */
     public int getEtudiantSelectionne() {
         return tableEtudiants.getSelectedRow();
@@ -247,42 +272,92 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     // ACCESSEURS
     //-----------------------------
     
+    /**
+     * Obtient le champ de saisie du nom.
+     * 
+     * @return Le champ de texte pour le nom
+     */
     public JTextField getChampNom() {
         return champNom;
     }
     
+    /**
+     * Obtient le champ de saisie de la nationalité.
+     * 
+     * @return Le champ de texte pour la nationalité
+     */
     public JTextField getChampPrenom() {
         return champPrenom;
     }
     
+    /**
+     * Obtient la combobox de sélection des maisons.
+     * 
+     * @return La combobox contenant les maisons disponibles
+     */
     public JTextField getChampNationalite() {
         return champNationalite;
     }
     
+    /**
+     * Obtient le champ de recherche.
+     * 
+     * @return Le champ de texte pour la recherche
+     */
     public JComboBox<String> getComboMaisons() {
         return comboMaisons;
     }
     
+    /**
+     * Obtient le bouton d'ajout d'étudiant.
+     * 
+     * @return Le bouton pour ajouter un étudiant
+     */
     public JTextField getChampRecherche() {
         return champRecherche;
     }
     
+    /**
+     * Obtient le bouton de modification d'étudiant.
+     * 
+     * @return Le bouton pour modifier un étudiant
+     */
     public JButton getBoutonAjouter() {
         return boutonAjouter;
     }
     
+    /**
+     * Obtient le bouton de suppression d'étudiant.
+     * 
+     * @return Le bouton pour supprimer un étudiant
+     */
     public JButton getBoutonModifier() {
         return boutonModifier;
     }
     
+    /**
+     * Obtient le bouton d'affectation d'étudiant.
+     * 
+     * @return Le bouton pour affecter un étudiant à une maison
+     */
     public JButton getBoutonSupprimer() {
         return boutonSupprimer;
     }
     
+    /**
+     * Obtient le bouton de recherche.
+     * 
+     * @return Le bouton pour lancer une recherche
+     */
     public JButton getBoutonAffecter() {
         return boutonAffecter;
     }
     
+    /**
+     * Obtient le tableau des étudiants.
+     * 
+     * @return Le composant JTable affichant les étudiants
+     */
     public JButton getBoutonRechercher() {
         return boutonRechercher;
     }

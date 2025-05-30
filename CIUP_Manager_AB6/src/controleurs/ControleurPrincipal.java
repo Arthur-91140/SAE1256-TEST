@@ -25,6 +25,12 @@ public class ControleurPrincipal implements ActionListener {
     //-----------------------------
     // CONSTRUCTEUR
     //-----------------------------
+    /**
+     * Constructeur du contrôleur principal
+     * Initialise les contrôleurs spécialisés, configure les écouteurs et met à jour les vues
+     * @param modele le gestionnaire CIUP contenant les données
+     * @param vue la vue principale de l'application
+     */
     public ControleurPrincipal(GestionnaireCIUP modele, VuePrincipale vue) {
         this.modele = modele;
         this.vue = vue;
@@ -47,6 +53,9 @@ public class ControleurPrincipal implements ActionListener {
     // MÉTHODES D'INITIALISATION
     //-----------------------------
     
+    /**
+     * Configure les écouteurs d'événements pour les menus et composants
+     */
     private void configurerEcouteurs() {
         // Écouteurs pour le menu principal
         vue.getMenuSauvegarder().addActionListener(this);
@@ -66,6 +75,10 @@ public class ControleurPrincipal implements ActionListener {
     // GESTION DES ÉVÉNEMENTS
     //-----------------------------
     
+    /**
+     * Gère les événements des menus (sauvegarder, quitter, à propos)
+     * @param e l'événement d'action déclenché
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
@@ -87,6 +100,9 @@ public class ControleurPrincipal implements ActionListener {
     // MÉTHODES PRIVÉES
     //-----------------------------
     
+    /**
+     * Sauvegarde les données via le modèle et affiche un message de confirmation
+     */
     private void sauvegarderDonnees() {
         try {
             modele.sauvegarderDonnees();
@@ -102,6 +118,10 @@ public class ControleurPrincipal implements ActionListener {
         }
     }
     
+    /**
+     * Affiche une boîte de dialogue de confirmation avant de quitter l'application
+     * Propose de sauvegarder avant la fermeture
+     */
     private void quitterApplication() {
         int choix = JOptionPane.showConfirmDialog(vue,
             "Voulez-vous sauvegarder avant de quitter ?",
@@ -117,6 +137,9 @@ public class ControleurPrincipal implements ActionListener {
         // Si CANCEL, on ne fait rien
     }
     
+    /**
+     * Affiche les informations sur l'application et ses développeurs
+     */
     private void afficherAPropos() {
         String message = "CIUP Manager v1.0\n\n" +
                         "Application de gestion de la Cité Internationale\n" +
@@ -134,6 +157,9 @@ public class ControleurPrincipal implements ActionListener {
             JOptionPane.INFORMATION_MESSAGE);
     }
     
+    /**
+     * Met à jour toutes les vues spécialisées et les statistiques
+     */
     private void mettreAJourToutesLesVues() {
         // Mise à jour via les contrôleurs spécialisés
         controleurEtudiants.mettreAJourVue();
@@ -142,6 +168,10 @@ public class ControleurPrincipal implements ActionListener {
         mettreAJourStatistiques();
     }
     
+    /**
+     * Calcule et met à jour les statistiques affichées dans la vue
+     * Comprend les statistiques générales, taux d'occupation et répartition par nationalité
+     */
     private void mettreAJourStatistiques() {
         ModeleStatistiques stats = new ModeleStatistiques(modele);
         

@@ -2,7 +2,26 @@ package citeU;
 
 import java.util.ArrayList;
 
+/**
+ * Classe de test et démonstration du système de gestion des cités universitaires.
+ * 
+ * Cette classe contient la méthode main qui teste les fonctionnalités principales
+ * du système CIUP, incluant la gestion des étudiants, des maisons, des restaurations
+ * et des menus.
+ */
 public class CIUPFactory {
+	
+    /**
+     * Point d'entrée principal pour tester les fonctionnalités du système CIUP.
+     * 
+     * Effectue une série de tests comprenant :
+     * - Création et gestion d'étudiants
+     * - Gestion des maisons étudiantes et internationales
+     * - Gestion des restaurations et menus
+     * - Test des fonctionnalités de recherche et disponibilité
+     * 
+     * @param args Arguments de ligne de commande (non utilisés)
+     */
 	public static void main(String args[]) {
 		// Création d'étudiants
 		Etudiant etudiant1 = new Etudiant("Bailly", "Maxence", "France");

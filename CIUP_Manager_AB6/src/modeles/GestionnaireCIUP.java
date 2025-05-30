@@ -30,6 +30,11 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     //-----------------------------
     // CONSTRUCTEUR
     //-----------------------------
+    
+    /**
+     * Constructeur du gestionnaire CIUP
+     * Initialise toutes les listes de données et charge les données existantes
+     */
     public GestionnaireCIUP() {
         etudiants = new ArrayList<>();
         maisonsEtudiants = new ArrayList<>();
@@ -46,6 +51,7 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     
     /**
      * Initialise les données avec CIUPFactory si aucune sauvegarde n'existe
+     * Crée des données d'exemple avec étudiants, maisons et restaurations
      */
     public void initialiserDonnees() {
         if (etudiants.isEmpty()) {
@@ -114,11 +120,19 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     // MÉTHODES CRUD ÉTUDIANTS
     //-----------------------------
     
+    /**
+     * Ajoute un étudiant à la liste et notifie les observateurs
+     * @param etudiant l'étudiant à ajouter
+     */
     public void ajouterEtudiant(citeU.Etudiant etudiant) {
         etudiants.add(etudiant);
         notifierObservateurs();
     }
     
+    /**
+     * Supprime un étudiant de sa maison et de la liste générale
+     * @param etudiant l'étudiant à supprimer
+     */
     public void supprimerEtudiant(citeU.Etudiant etudiant) {
         if (etudiant.getSaMaison() != null) {
             etudiant.getSaMaison().retireEtudiant(etudiant);
@@ -127,6 +141,11 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         notifierObservateurs();
     }
     
+    /**
+     * Recherche un étudiant par son nom (insensible à la casse)
+     * @param nom le nom de l'étudiant recherché
+     * @return l'étudiant trouvé ou null si aucun étudiant ne correspond
+     */
     public citeU.Etudiant rechercherEtudiantParNom(String nom) {
         for (citeU.Etudiant etudiant : etudiants) {
             if (etudiant.getNom().equalsIgnoreCase(nom)) {
@@ -140,11 +159,19 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     // MÉTHODES CRUD MAISONS
     //-----------------------------
     
+    /**
+     * Ajoute une maison d'étudiant à la liste et notifie les observateurs
+     * @param maison la maison d'étudiant à ajouter
+     */
     public void ajouterMaisonEtudiant(citeU.MaisonEtudiant maison) {
         maisonsEtudiants.add(maison);
         notifierObservateurs();
     }
     
+    /**
+     * Ajoute une maison internationale à la liste et notifie les observateurs
+     * @param maison la maison internationale à ajouter
+     */
     public void ajouterMaisonInternationale(citeU.MaisonInternationale maison) {
         maisonsInternationales.add(maison);
         notifierObservateurs();
@@ -154,11 +181,19 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     // MÉTHODES CRUD RESTAURATIONS
     //-----------------------------
     
+    /**
+     * Ajoute une restauration à la liste et notifie les observateurs
+     * @param restauration la restauration à ajouter
+     */
     public void ajouterRestauration(citeU.Restauration restauration) {
         restaurations.add(restauration);
         notifierObservateurs();
     }
     
+    /**
+     * Ajoute un menu à la liste générale et notifie les observateurs
+     * @param menu le menu à ajouter
+     */
     public void ajouterMenu(citeU.Menu menu) {
         menus.add(menu);
         notifierObservateurs();
@@ -168,26 +203,50 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     // ACCESSEURS
     //-----------------------------
     
+    /**
+     * Retourne la liste des étudiants
+     * @return ArrayList contenant tous les étudiants
+     */
     public ArrayList<citeU.Etudiant> getEtudiants() {
         return etudiants;
     }
     
+    /**
+     * Retourne la liste des maisons d'étudiants
+     * @return ArrayList contenant toutes les maisons d'étudiants
+     */
     public ArrayList<citeU.MaisonEtudiant> getMaisonsEtudiants() {
         return maisonsEtudiants;
     }
     
+    /**
+     * Retourne la liste des maisons internationales
+     * @return ArrayList contenant toutes les maisons internationales
+     */
     public ArrayList<citeU.MaisonInternationale> getMaisonsInternationales() {
         return maisonsInternationales;
     }
     
+    /**
+     * Retourne la liste des restaurations
+     * @return ArrayList contenant toutes les restaurations
+     */
     public ArrayList<citeU.Restauration> getRestaurations() {
         return restaurations;
     }
     
+    /**
+     * Retourne la liste des menus
+     * @return ArrayList contenant tous les menus
+     */
     public ArrayList<citeU.Menu> getMenus() {
         return menus;
     }
     
+    /**
+     * Définit le contrôleur principal pour les notifications
+     * @param controleur le contrôleur principal
+     */
     public void setControleurPrincipal(ControleurPrincipal controleur) {
         this.controleurPrincipal = controleur;
     }
@@ -196,6 +255,10 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     // IMPLÉMENTATION INTERFACE
     //-----------------------------
     
+    /**
+     * Charge les données depuis le fichier de sauvegarde
+     * Initialise avec des listes vides en cas d'erreur
+     */
     @Override
     public void chargerDonnees() {
         File fichier = new File(FICHIER_SAUVEGARDE);
@@ -223,6 +286,10 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         }
     }
     
+    /**
+     * Sauvegarde les données dans un fichier sérialisé
+     * Affiche les erreurs sur la sortie d'erreur standard
+     */
     @Override
     public void sauvegarderDonnees() {
         try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(FICHIER_SAUVEGARDE))) {
@@ -233,6 +300,10 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         }
     }
     
+    /**
+     * Notifie les observateurs des changements
+     * Sauvegarde automatiquement et rafraîchit les vues
+     */
     @Override
     public void notifierObservateurs() {
         sauvegarderDonnees();
