@@ -9,10 +9,6 @@ import java.util.Map;
  * @author Arthur Pruvost
  */
 public class VueStatistiques extends JPanel implements InterfaceVue {
-    
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
     private JLabel labelNombreEtudiants;
     private JLabel labelNombreMaisons;
     private JLabel labelNombreRestaurations;
@@ -21,9 +17,6 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
     private JPanel panneauTauxOccupation;
     private JPanel panneauNationalites;
     
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
     public VueStatistiques() {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createTitledBorder("Statistiques Globales"));
@@ -31,10 +24,6 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
         initialiserComposants();
         configurerLayout();
     }
-    
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
     
     /**
      * Initialise tous les composants graphiques de la vue statistiques.
@@ -138,10 +127,6 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
         
         return panneau;
     }
-    
-    //-----------------------------
-    // MÉTHODES PUBLIQUES
-    //-----------------------------
     
     /**
      * Met à jour les statistiques générales affichées.
@@ -278,10 +263,6 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
         timer.setRepeats(false);
         timer.start();
     }
-    
-    //-----------------------------
-    // IMPLÉMENTATION INTERFACE
-    //-----------------------------
     
     /**
      * Redessine la vue et met à jour l'affichage.

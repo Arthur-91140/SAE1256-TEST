@@ -13,16 +13,8 @@ import citeU.*;
  * @author Arthur Pruvost
  */
 public class ControleurRestaurations implements ActionListener, ListSelectionListener {
-    
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
     private GestionnaireCIUP modele;
     private VueGestionRestaurations vue;
-    
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
     
     /**
      * Constructeur du contrôleur des restaurations
@@ -38,10 +30,6 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         mettreAJourVue();
     }
     
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
-    
     /**
      * Configure les écouteurs d'événements pour les boutons et tableaux
      */
@@ -56,10 +44,6 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         // Écouteur pour la sélection dans le tableau des restaurations
         vue.getTableRestaurations().getSelectionModel().addListSelectionListener(this);
     }
-    
-    //-----------------------------
-    // GESTION DES ÉVÉNEMENTS
-    //-----------------------------
     
     /**
      * Gère les événements des boutons (ajouter menu, supprimer menu, etc.)
@@ -108,10 +92,6 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             }
         }
     }
-    
-    //-----------------------------
-    // MÉTHODES PRIVÉES
-    //-----------------------------
     
 
 	/**
@@ -351,10 +331,6 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         }
         return null;
     }
-    
-    //-----------------------------
-    // MÉTHODES PUBLIQUES
-    //-----------------------------
     
     /**
      * Met à jour la vue complète

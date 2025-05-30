@@ -10,16 +10,9 @@ import citeU.*;
  * @author Maxence Bailly
  */
 public class VueGestionMaisons extends JPanel implements InterfaceVue {
-    
-    //-----------------------------
-    // CONSTANTES D'ACTIONS
-    //-----------------------------
     public static final String ACTION_AJOUTER_MAISON = "AJOUTER_MAISON";
     public static final String ACTION_VOIR_DETAILS = "VOIR_DETAILS";
     
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
     private JTabbedPane ongletsMaisons;
     
     // Onglet Maisons d'Étudiants
@@ -67,9 +60,6 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         configurerLayout();
     }
     
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
     
     /**
      * Initialise tous les composants graphiques de la vue.
@@ -315,11 +305,7 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         
         return formulaire;
     }
-    
-    //-----------------------------
-    // MÉTHODES PUBLIQUES
-    //-----------------------------
-    
+
     /**
      * Met à jour la liste des maisons d'étudiants.
      * Affiche le nom, la nationalité et l'occupation de chaque maison.
@@ -415,11 +401,7 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         champNationalite.setText("");
         champNombreChambres.setText("");
     }
-    
-    //-----------------------------
-    // ACCESSEURS
-    //-----------------------------
-    
+
     /**
      * Obtient la liste des maisons d'étudiants.
      * 
@@ -565,11 +547,7 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
      * @return Le champ de texte pour le directeur des maisons internationales
      */
     public JTextField getChampDirecteurInt() { return champDirecteurInt; }
-    
-    //-----------------------------
-    // IMPLÉMENTATION INTERFACE
-    //-----------------------------
-    
+
     /**
      * Redessine la vue en forçant la mise à jour graphique.
      * Implémentation de l'interface InterfaceVue.

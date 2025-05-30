@@ -12,19 +12,12 @@ import citeU.Menu;
  * @author Arthur Pruvost
  */
 public class VueGestionRestaurations extends JPanel implements InterfaceVue {
-    
-    //-----------------------------
-    // CONSTANTES D'ACTIONS
-    //-----------------------------
     public static final String ACTION_AJOUTER_MENU = "AJOUTER_MENU";
     public static final String ACTION_SUPPRIMER_MENU = "SUPPRIMER_MENU";
     public static final String ACTION_AFFECTER_MENU = "AFFECTER_MENU";
     public static final String ACTION_AJOUTER_RESTAURATION = "AJOUTER_RESTAURATION";
     public static final String ACTION_AFFECTER_RESTAURATION_MAISON = "AFFECTER_RESTAURATION_MAISON";
     
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
     private JTable tableRestaurations;
     private DefaultTableModel modeleTableRestaurations;
     private JTable tableMenus;
@@ -51,10 +44,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     private JButton boutonAjouterMenu;
     private JButton boutonSupprimerMenu;
     private JButton boutonAffecterMenu;
-    
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
+
     public VueGestionRestaurations() {
         setLayout(new BorderLayout());
         setBorder(BorderFactory.createTitledBorder("Gestion des Restaurations"));
@@ -62,11 +52,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         initialiserComposants();
         configurerLayout();
     }
-    
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
-    
+
     /**
      * Initialise tous les composants graphiques de la vue.
      * 
@@ -324,11 +310,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         
         return formulaire;
     }
-    
-    //-----------------------------
-    // MÉTHODES PUBLIQUES
-    //-----------------------------
-    
+
     /**
      * Met à jour le tableau des restaurations.
      * 
@@ -487,11 +469,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     public int getMenuSelectionne() {
         return tableMenus.getSelectedRow();
     }
-    
-    //-----------------------------
-    // ACCESSEURS
-    //-----------------------------
-    
+
     /**
      * Obtient le champ de saisie du nom du menu.
      * 
@@ -653,11 +631,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     public JButton getBoutonAffecterRestaurationMaison() {
         return boutonAffecterRestaurationMaison;
     }
-    
-    //-----------------------------
-    // IMPLÉMENTATION INTERFACE
-    //-----------------------------
-    
+
     @Override
     public void redessiner() {
         repaint();

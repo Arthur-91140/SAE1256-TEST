@@ -11,19 +11,12 @@ import citeU.*;
  * @author Arthur Pruvost
  */
 public class VueGestionEtudiants extends JPanel implements InterfaceVue {
-    
-    //-----------------------------
-    // CONSTANTES D'ACTIONS
-    //-----------------------------
     public static final String ACTION_AJOUTER = "AJOUTER_ETUDIANT";
     public static final String ACTION_MODIFIER = "MODIFIER_ETUDIANT";
     public static final String ACTION_SUPPRIMER = "SUPPRIMER_ETUDIANT";
     public static final String ACTION_AFFECTER = "AFFECTER_ETUDIANT";
     public static final String ACTION_RECHERCHER = "RECHERCHER_ETUDIANT";
     
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
     private JTable tableEtudiants;
     private DefaultTableModel modeleTable;
     private JScrollPane scrollPane;
@@ -42,10 +35,6 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     private JButton boutonAffecter;
     private JButton boutonRechercher;
     
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
-    
     /**
      * Construit une nouvelle vue de gestion des étudiants.
      * Initialise tous les composants graphiques et configure le layout.
@@ -57,10 +46,6 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
         initialiserComposants();
         configurerLayout();
     }
-    
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
     
     /**
      * Initialise tous les composants graphiques de la vue.
@@ -181,10 +166,6 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
         add(splitPane, BorderLayout.CENTER);
     }
     
-    //-----------------------------
-    // MÉTHODES PUBLIQUES
-    //-----------------------------
-    
     /**
      * Met à jour le tableau avec la liste des étudiants.
      * Vide le tableau existant et ajoute tous les étudiants de la liste.
@@ -267,10 +248,6 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     public int getEtudiantSelectionne() {
         return tableEtudiants.getSelectedRow();
     }
-    
-    //-----------------------------
-    // ACCESSEURS
-    //-----------------------------
     
     /**
      * Obtient le champ de saisie du nom.
@@ -365,10 +342,6 @@ public class VueGestionEtudiants extends JPanel implements InterfaceVue {
     public JTable getTableEtudiants() {
         return tableEtudiants;
     }
-    
-    //-----------------------------
-    // IMPLÉMENTATION INTERFACE
-    //-----------------------------
     
     @Override
     public void redessiner() {

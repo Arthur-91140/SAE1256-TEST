@@ -19,17 +19,9 @@ import citeU.*;
  * @author Arthur Pruvost
  */
 public class ControleurEtudiants implements ActionListener, ListSelectionListener {
-    
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
     private GestionnaireCIUP modele;
     private VueGestionEtudiants vue;
-    
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
-    
+
     /**
      * Construit un nouveau contrôleur pour la gestion des étudiants.
      * 
@@ -46,11 +38,7 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
         configurerEcouteurs();
         mettreAJourVue();
     }
-    
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
-    
+
     /**
      * Configure tous les écouteurs d'événements pour l'interface utilisateur.
      * 
@@ -78,10 +66,6 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
             }
         });
     }
-    
-    //-----------------------------
-    // GESTION DES ÉVÉNEMENTS
-    //-----------------------------
     
     /**
      * Gère les événements d'action déclenchés par les boutons.
@@ -132,10 +116,6 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
             }
         }
     }
-    
-    //-----------------------------
-    // MÉTHODES PRIVÉES
-    //-----------------------------
     
     /**
      * Ajoute un nouvel étudiant au système.
@@ -377,10 +357,6 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
     private void mettreAJourTableau() {
         vue.mettreAJourTableau(modele.getEtudiants());
     }
-    
-    //-----------------------------
-    // MÉTHODES PUBLIQUES
-    //-----------------------------
     
     /**
      * Met à jour l'ensemble de l'interface utilisateur.

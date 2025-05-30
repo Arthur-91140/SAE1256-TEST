@@ -10,10 +10,6 @@ import vues.*;
  * @author Maxence Bailly
  */
 public class ControleurPrincipal implements ActionListener {
-    
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
     private GestionnaireCIUP modele;
     private VuePrincipale vue;
     
@@ -22,9 +18,6 @@ public class ControleurPrincipal implements ActionListener {
     private ControleurMaisons controleurMaisons;
     private ControleurRestaurations controleurRestaurations;
     
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
     /**
      * Constructeur du contrôleur principal
      * Initialise les contrôleurs spécialisés, configure les écouteurs et met à jour les vues
@@ -49,10 +42,6 @@ public class ControleurPrincipal implements ActionListener {
         modele.setControleurPrincipal(this);
     }
     
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
-    
     /**
      * Configure les écouteurs d'événements pour les menus et composants
      */
@@ -70,10 +59,7 @@ public class ControleurPrincipal implements ActionListener {
             }
         });
     }
-    
-    //-----------------------------
-    // GESTION DES ÉVÉNEMENTS
-    //-----------------------------
+
     
     /**
      * Gère les événements des menus (sauvegarder, quitter, à propos)
@@ -96,9 +82,6 @@ public class ControleurPrincipal implements ActionListener {
         }
     }
     
-    //-----------------------------
-    // MÉTHODES PRIVÉES
-    //-----------------------------
     
     /**
      * Sauvegarde les données via le modèle et affiche un message de confirmation
@@ -199,11 +182,7 @@ public class ControleurPrincipal implements ActionListener {
         vue.getVueStatistiques().mettreAJourRepartitionNationalites(
             stats.getRepartitionParNationalite());
     }
-    
-    //-----------------------------
-    // MÉTHODES PUBLIQUES
-    //-----------------------------
-    
+        
     /**
      * Met à jour toutes les vues après une modification
      */

@@ -8,18 +8,11 @@ import java.awt.*;
  * @author Maxence Bailly
  */
 public class VuePrincipale extends JFrame implements InterfaceVue {
-    
-    //-----------------------------
-    // CONSTANTES
-    //-----------------------------
     public static final String ACTION_ETUDIANTS = "ETUDIANTS";
     public static final String ACTION_MAISONS = "MAISONS";
     public static final String ACTION_RESTAURATIONS = "RESTAURATIONS";
     public static final String ACTION_STATISTIQUES = "STATISTIQUES";
-    
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
+
     private JMenuBar menuBar;
     private JMenu menuFichier;
     private JMenu menuAide;
@@ -32,18 +25,11 @@ public class VuePrincipale extends JFrame implements InterfaceVue {
     private VueGestionMaisons vueMaisons;
     private VueGestionRestaurations vueRestaurations;
     private VueStatistiques vueStatistiques;
-    
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
+
     public VuePrincipale() {
         initialiserInterface();
         configurerFenetre();
     }
-    
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
     
     /**
      * Initialise l'interface utilisateur principale.
@@ -167,10 +153,6 @@ public class VuePrincipale extends JFrame implements InterfaceVue {
         }
     }
     
-    //-----------------------------
-    // ACCESSEURS
-    //-----------------------------
-    
     /**
      * Obtient l'élément de menu Sauvegarder.
      * 
@@ -233,10 +215,6 @@ public class VuePrincipale extends JFrame implements InterfaceVue {
     public VueStatistiques getVueStatistiques() {
         return vueStatistiques;
     }
-    
-    //-----------------------------
-    // IMPLÉMENTATION INTERFACE
-    //-----------------------------
     
     @Override
     public void redessiner() {

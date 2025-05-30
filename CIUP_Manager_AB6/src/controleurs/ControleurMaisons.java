@@ -18,17 +18,9 @@ import citeU.*;
  * @author Maxence Bailly
  */
 public class ControleurMaisons implements ActionListener, ListSelectionListener {
-    
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
     private GestionnaireCIUP modele;
     private VueGestionMaisons vue;
     
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
-
     /**
      * Construit un nouveau contrôleur pour la gestion des maisons.
      * 
@@ -46,10 +38,6 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
         mettreAJourVue();
     }
     
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
-    
     /**
      * Configure les écouteurs d'événements pour l'interface utilisateur.
      * 
@@ -65,10 +53,6 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
         vue.getListeMaisonsEtudiants().addListSelectionListener(this);
         vue.getListeMaisonsInternationales().addListSelectionListener(this);
     }
-    
-    //-----------------------------
-    // GESTION DES ÉVÉNEMENTS
-    //-----------------------------
     
     /**
      * Gère les événements d'action déclenchés par les boutons.
@@ -119,10 +103,6 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
             }
         }
     }
-    
-    //-----------------------------
-    // MÉTHODES PRIVÉES
-    //-----------------------------
     
     /**
      * Ajoute une nouvelle maison étudiante au système.
@@ -294,10 +274,6 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
         
         return true;
     }
-    
-    //-----------------------------
-    // MÉTHODES PUBLIQUES
-    //-----------------------------
     
     /**
      * Met à jour l'ensemble de l'interface utilisateur.

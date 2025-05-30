@@ -11,10 +11,6 @@ public class ModeleStatistiques {
     
     private GestionnaireCIUP gestionnaire;
     
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
-    
     /**
      * Constructeur du modèle de statistiques
      * @param gestionnaire le gestionnaire CIUP contenant les données
@@ -22,10 +18,6 @@ public class ModeleStatistiques {
     public ModeleStatistiques(GestionnaireCIUP gestionnaire) {
         this.gestionnaire = gestionnaire;
     }
-    
-    //-----------------------------
-    // MÉTHODES DE CALCUL
-    //-----------------------------
     
     /**
      * Calcule le nombre total d'étudiants

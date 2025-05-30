@@ -15,9 +15,6 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     private static final long serialVersionUID = 1L;
     private static final String FICHIER_SAUVEGARDE = "ciup_data.dat";
     
-    //-----------------------------
-    // ATTRIBUTS
-    //-----------------------------
     private ArrayList<citeU.Etudiant> etudiants;
     private ArrayList<citeU.MaisonEtudiant> maisonsEtudiants;
     private ArrayList<citeU.MaisonInternationale> maisonsInternationales;
@@ -26,10 +23,6 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     
     // Transient pour éviter la sérialisation du contrôleur
     private transient ControleurPrincipal controleurPrincipal;
-    
-    //-----------------------------
-    // CONSTRUCTEUR
-    //-----------------------------
     
     /**
      * Constructeur du gestionnaire CIUP
@@ -44,10 +37,6 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         
         chargerDonnees();
     }
-    
-    //-----------------------------
-    // MÉTHODES D'INITIALISATION
-    //-----------------------------
     
     /**
      * Initialise les données avec CIUPFactory si aucune sauvegarde n'existe
@@ -116,10 +105,6 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         }
     }
     
-    //-----------------------------
-    // MÉTHODES CRUD ÉTUDIANTS
-    //-----------------------------
-    
     /**
      * Ajoute un étudiant à la liste et notifie les observateurs
      * @param etudiant l'étudiant à ajouter
@@ -155,10 +140,6 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         return null;
     }
     
-    //-----------------------------
-    // MÉTHODES CRUD MAISONS
-    //-----------------------------
-    
     /**
      * Ajoute une maison d'étudiant à la liste et notifie les observateurs
      * @param maison la maison d'étudiant à ajouter
@@ -177,10 +158,6 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         notifierObservateurs();
     }
     
-    //-----------------------------
-    // MÉTHODES CRUD RESTAURATIONS
-    //-----------------------------
-    
     /**
      * Ajoute une restauration à la liste et notifie les observateurs
      * @param restauration la restauration à ajouter
@@ -198,10 +175,6 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         menus.add(menu);
         notifierObservateurs();
     }
-    
-    //-----------------------------
-    // ACCESSEURS
-    //-----------------------------
     
     /**
      * Retourne la liste des étudiants
@@ -250,10 +223,6 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     public void setControleurPrincipal(ControleurPrincipal controleur) {
         this.controleurPrincipal = controleur;
     }
-    
-    //-----------------------------
-    // IMPLÉMENTATION INTERFACE
-    //-----------------------------
     
     /**
      * Charge les données depuis le fichier de sauvegarde
