@@ -94,14 +94,23 @@ public class ModeleStatistiques {
      * Calcule le prix moyen des menus
      */
     public double getPrixMoyenMenus() {
-        ArrayList<Menu> menus = gestionnaire.getMenus();
-        if (menus.isEmpty()) return 0.0;
+        // Utiliser un Set pour éviter de compter les menus en double
+        Set<Menu> menusUniques = new HashSet<>();
         
+        // Parcourir toutes les restaurations et collecter leurs menus
+        for (Restauration restauration : gestionnaire.getRestaurations()) {
+            menusUniques.addAll(restauration.getSesMenus());
+        }
+        
+        // Si aucun menu n'existe
+        if (menusUniques.isEmpty()) return 0.0;
+        
+        // Calculer la somme des prix
         double totalPrix = 0.0;
-        for (Menu menu : menus) {
+        for (Menu menu : menusUniques) {
             totalPrix += menu.getPrix();
         }
         
-        return totalPrix / menus.size();
+        return totalPrix / menusUniques.size();
     }
 }
