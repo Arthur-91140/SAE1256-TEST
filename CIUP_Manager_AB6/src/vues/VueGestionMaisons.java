@@ -99,6 +99,11 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         champLocalisationInt = new JTextField(20);
         champDirecteurInt = new JTextField(20);
         
+        // Champs pour compatibilité avec le contrôleur
+        champNomMaison = champNomMaisonEtudiant;
+        champLocalisation = champLocalisationEtudiant;
+        champDirecteur = champDirecteurEtudiant;
+        
         // Boutons
         boutonAjouterMaisonEtudiant = new JButton("Ajouter Maison d'Étudiants");
         boutonAjouterMaisonInternationale = new JButton("Ajouter Maison Internationale");
@@ -274,8 +279,6 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         return formulaire;
     }
     
-    
-    
     //-----------------------------
     // MÉTHODES PUBLIQUES
     //-----------------------------
@@ -362,7 +365,6 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         champNationalite.setText("");
         champNombreChambres.setText("");
     }
-
     
     //-----------------------------
     // ACCESSEURS
@@ -377,15 +379,30 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     }
     
     public JTextField getChampNomMaison() {
-        return champNomMaison;
+        // Retourne le champ approprié selon l'onglet actif
+        if (ongletsMaisons.getSelectedIndex() == 0) {
+            return champNomMaisonEtudiant;
+        } else {
+            return champNomMaisonInt;
+        }
     }
     
     public JTextField getChampLocalisation() {
-        return champLocalisation;
+        // Retourne le champ approprié selon l'onglet actif
+        if (ongletsMaisons.getSelectedIndex() == 0) {
+            return champLocalisationEtudiant;
+        } else {
+            return champLocalisationInt;
+        }
     }
     
     public JTextField getChampDirecteur() {
-        return champDirecteur;
+        // Retourne le champ approprié selon l'onglet actif
+        if (ongletsMaisons.getSelectedIndex() == 0) {
+            return champDirecteurEtudiant;
+        } else {
+            return champDirecteurInt;
+        }
     }
     
     public JTextField getChampNationalite() {
