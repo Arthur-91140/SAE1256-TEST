@@ -1,52 +1,55 @@
 package citeU;
 
-public class Etudiant {
+import java.io.Serializable;
 
-	private MaisonEtudiant saMaison;
-	private String nom;
-	private String prenom;
-	private String nationalite;
+public class Etudiant implements Serializable {
+    
+    private static final long serialVersionUID = 1L;
 
-	public Etudiant(String nom, String prenom, String nationalite) {
-		this.nom = nom;
-		this.prenom = prenom;
-		this.nationalite = nationalite;
-	}
+    private MaisonEtudiant saMaison;
+    private String nom;
+    private String prenom;
+    private String nationalite;
 
-	public void afficheMaison() {
-		System.out.println(saMaison);
-	}
+    public Etudiant(String nom, String prenom, String nationalite) {
+        this.nom = nom;
+        this.prenom = prenom;
+        this.nationalite = nationalite;
+    }
 
-	public MaisonEtudiant getSaMaison() {
-		return saMaison;
-	}
+    public void afficheMaison() {
+        System.out.println(saMaison);
+    }
 
-	public void setSaMaison(MaisonEtudiant saMaison) {
-		this.saMaison = saMaison;
-	}
+    public MaisonEtudiant getSaMaison() {
+        return saMaison;
+    }
 
-	public String getNom() {
-		return nom;
-	}
+    public void setSaMaison(MaisonEtudiant saMaison) {
+        this.saMaison = saMaison;
+    }
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    public String getNom() {
+        return nom;
+    }
 
-	public String getPrenom() {
-		return prenom;
-	}
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	public void setPrenom(String prenom) {
-		this.prenom = prenom;
-	}
+    public String getPrenom() {
+        return prenom;
+    }
 
-	public String getNationalite() {
-		return nationalite;
-	}
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
 
-	public void setNationalite(String nationalite) {
-		this.nationalite = nationalite;
-	}
+    public String getNationalite() {
+        return nationalite;
+    }
 
+    public void setNationalite(String nationalite) {
+        this.nationalite = nationalite;
+    }
 }
