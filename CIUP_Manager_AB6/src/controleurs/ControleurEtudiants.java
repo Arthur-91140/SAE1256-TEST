@@ -108,6 +108,20 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
             Etudiant nouvelEtudiant = new Etudiant(nom, prenom, nationalite);
             modele.ajouterEtudiant(nouvelEtudiant);
             
+            // Affecter à une maison si sélectionnée
+            int maisonSelectionnee = vue.getComboMaisons().getSelectedIndex();
+            if (maisonSelectionnee > 0) { // > 0 car index 0 = "Sélectionner une maison"
+                MaisonEtudiant maison = modele.getMaisonsEtudiants().get(maisonSelectionnee - 1);
+                if (maison.verifierDisponibilite()) {
+                    maison.ajouteEtudiant(nouvelEtudiant);
+                } else {
+                    JOptionPane.showMessageDialog(vue, 
+                        "La maison sélectionnée n'a plus de places disponibles", 
+                        "Attention", 
+                        JOptionPane.WARNING_MESSAGE);
+                }
+            }
+            
             vue.viderFormulaire();
             mettreAJourVue();
             

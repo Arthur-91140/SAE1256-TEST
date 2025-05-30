@@ -118,7 +118,10 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     
     private void ajouterMaisonInternationale() {
         if (validerFormulaireMaisonInternationale()) {
-            String nom = vue.getChampNomMaison().getText().trim();
+            // Utiliser le champ spécifique aux maisons internationales
+            String nom = vue.getChampNomMaisonInt() != null ? 
+                        vue.getChampNomMaisonInt().getText().trim() : 
+                        vue.getChampNomMaison().getText().trim();
             String localisation = vue.getChampLocalisation().getText().trim();
             String directeur = vue.getChampDirecteur().getText().trim();
             

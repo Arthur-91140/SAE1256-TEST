@@ -39,6 +39,13 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     private JTextField champNationalite;
     private JTextField champNombreChambres;
     
+    private JTextField champNomMaisonEtudiant;
+    private JTextField champLocalisationEtudiant;
+    private JTextField champDirecteurEtudiant;
+    private JTextField champNomMaisonInt;
+    private JTextField champLocalisationInt;
+    private JTextField champDirecteurInt;
+    
     // Boutons
     private JButton boutonAjouterMaisonEtudiant;
     private JButton boutonAjouterMaisonInternationale;
@@ -80,12 +87,17 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         detailsMaisonInternationale.setEditable(false);
         detailsMaisonInternationale.setBorder(BorderFactory.createTitledBorder("Détails de la Maison"));
         
-        // Champs du formulaire
-        champNomMaison = new JTextField(20);
-        champLocalisation = new JTextField(20);
-        champDirecteur = new JTextField(20);
+        // Champs SÉPARÉS pour maisons d'étudiants
+        champNomMaisonEtudiant = new JTextField(20);
+        champLocalisationEtudiant = new JTextField(20);
+        champDirecteurEtudiant = new JTextField(20);
         champNationalite = new JTextField(20);
         champNombreChambres = new JTextField(20);
+        
+        // Champs SÉPARÉS pour maisons internationales
+        champNomMaisonInt = new JTextField(20);
+        champLocalisationInt = new JTextField(20);
+        champDirecteurInt = new JTextField(20);
         
         // Boutons
         boutonAjouterMaisonEtudiant = new JButton("Ajouter Maison d'Étudiants");
@@ -195,7 +207,7 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
         formulaire.add(new JLabel("Nom:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
-        formulaire.add(champNomMaison, gbc);
+        formulaire.add(champNomMaisonEtudiant, gbc);
         
         // Nationalité
         gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.NONE;
@@ -213,13 +225,13 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         gbc.gridx = 0; gbc.gridy = 3; gbc.fill = GridBagConstraints.NONE;
         formulaire.add(new JLabel("Localisation:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
-        formulaire.add(champLocalisation, gbc);
+        formulaire.add(champLocalisationEtudiant, gbc);
         
         // Directeur
         gbc.gridx = 0; gbc.gridy = 4; gbc.fill = GridBagConstraints.NONE;
         formulaire.add(new JLabel("Directeur:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
-        formulaire.add(champDirecteur, gbc);
+        formulaire.add(champDirecteurEtudiant, gbc);
         
         // Bouton
         gbc.gridx = 0; gbc.gridy = 5; gbc.gridwidth = 2; gbc.fill = GridBagConstraints.NONE;
@@ -240,19 +252,19 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
         formulaire.add(new JLabel("Nom:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
-        formulaire.add(champNomMaison, gbc);
+        formulaire.add(champNomMaisonInt, gbc);
         
         // Localisation
         gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.NONE;
         formulaire.add(new JLabel("Localisation:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
-        formulaire.add(champLocalisation, gbc);
+        formulaire.add(champLocalisationInt, gbc);
         
         // Directeur
         gbc.gridx = 0; gbc.gridy = 2; gbc.fill = GridBagConstraints.NONE;
         formulaire.add(new JLabel("Directeur:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
-        formulaire.add(champDirecteur, gbc);
+        formulaire.add(champDirecteurInt, gbc);
         
         // Bouton
         gbc.gridx = 0; gbc.gridy = 3; gbc.gridwidth = 2; gbc.fill = GridBagConstraints.NONE;
@@ -261,6 +273,8 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
         
         return formulaire;
     }
+    
+    
     
     //-----------------------------
     // MÉTHODES PUBLIQUES
@@ -339,12 +353,16 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
      * Vide le formulaire
      */
     public void viderFormulaire() {
-        champNomMaison.setText("");
-        champLocalisation.setText("");
-        champDirecteur.setText("");
+        champNomMaisonEtudiant.setText("");
+        champLocalisationEtudiant.setText("");
+        champDirecteurEtudiant.setText("");
+        champNomMaisonInt.setText("");
+        champLocalisationInt.setText("");
+        champDirecteurInt.setText("");
         champNationalite.setText("");
         champNombreChambres.setText("");
     }
+
     
     //-----------------------------
     // ACCESSEURS
@@ -385,6 +403,13 @@ public class VueGestionMaisons extends JPanel implements InterfaceVue {
     public JButton getBoutonAjouterMaisonInternationale() {
         return boutonAjouterMaisonInternationale;
     }
+    
+    public JTextField getChampNomMaisonEtudiant() { return champNomMaisonEtudiant; }
+    public JTextField getChampLocalisationEtudiant() { return champLocalisationEtudiant; }
+    public JTextField getChampDirecteurEtudiant() { return champDirecteurEtudiant; }
+    public JTextField getChampNomMaisonInt() { return champNomMaisonInt; }
+    public JTextField getChampLocalisationInt() { return champLocalisationInt; }
+    public JTextField getChampDirecteurInt() { return champDirecteurInt; }
     
     //-----------------------------
     // IMPLÉMENTATION INTERFACE

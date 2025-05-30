@@ -42,6 +42,8 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         
         // Écouteur pour la sélection dans le tableau des restaurations
         vue.getTableRestaurations().getSelectionModel().addListSelectionListener(this);
+        
+        vue.getBoutonAjouterRestauration().addActionListener(this);
     }
     
     //-----------------------------
@@ -62,6 +64,10 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             case VueGestionRestaurations.ACTION_AFFECTER_MENU:
                 affecterMenu();
                 break;
+            case VueGestionRestaurations.ACTION_AJOUTER_RESTAURATION:
+                ajouterRestauration();
+                break;
+
         }
     }
     
@@ -72,6 +78,11 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             if (ligneSelectionnee >= 0 && ligneSelectionnee < modele.getRestaurations().size()) {
                 Restauration restauration = modele.getRestaurations().get(ligneSelectionnee);
                 vue.mettreAJourTableauMenus(restauration);
+                // Forcer le rafraîchissement
+                vue.redessiner();
+            } else {
+                // Vider le tableau des menus si aucune sélection
+                vue.mettreAJourTableauMenus(null);
             }
         }
     }
@@ -91,11 +102,17 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             Menu nouveauMenu = new Menu(nom, entree, plat, dessert, prix);
             modele.ajouterMenu(nouveauMenu);
             
-            // Affecter le menu à la restauration sélectionnée
-            int indexRestaurant = vue.getComboRestaurations().getSelectedIndex() - 1;
-            if (indexRestaurant >= 0) {
-                Restauration restauration = modele.getRestaurations().get(indexRestaurant);
+            // Affecter le menu à la restauration sélectionnée OBLIGATOIREMENT
+            int indexRestaurant = vue.getComboRestaurations().getSelectedIndex();
+            if (indexRestaurant > 0) { // > 0 car index 0 = "Sélectionner une restauration"
+                Restauration restauration = modele.getRestaurations().get(indexRestaurant - 1);
                 restauration.ajouteMenu(nouveauMenu);
+                
+                // IMPORTANT: Mettre à jour immédiatement si cette restauration est sélectionnée
+                int ligneSelectionnee = vue.getRestaurationSelectionnee();
+                if (ligneSelectionnee == indexRestaurant - 1) {
+                    vue.mettreAJourTableauMenus(restauration);
+                }
             }
             
             vue.viderFormulaire();
@@ -107,6 +124,7 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
                 JOptionPane.INFORMATION_MESSAGE);
         }
     }
+
     
     private void supprimerMenu() {
         int ligneRestauration = vue.getRestaurationSelectionnee();
@@ -203,6 +221,51 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             "Menu affecté avec succès à " + restaurationCible.getNom() + " !", 
             "Succès", 
             JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void ajouterRestauration() {
+        String nom = vue.getChampNomRestauration().getText().trim();
+        String capaciteStr = vue.getChampCapaciteRestauration().getText().trim();
+        
+        if (nom.isEmpty() || capaciteStr.isEmpty()) {
+            JOptionPane.showMessageDialog(vue, 
+                "Veuillez remplir tous les champs", 
+                "Erreur", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            int capacite = Integer.parseInt(capaciteStr);
+            String type = (String) vue.getComboTypeRestauration().getSelectedItem();
+            
+            Restauration nouvelleRestauration;
+            if ("RestoU".equals(type)) {
+                nouvelleRestauration = new RestoU(nom, capacite);
+            } else {
+                nouvelleRestauration = new Cafet(nom, capacite);
+            }
+            
+            modele.ajouterRestauration(nouvelleRestauration);
+            
+            // Vider les champs
+            vue.getChampNomRestauration().setText("");
+            vue.getChampCapaciteRestauration().setText("");
+            vue.getComboTypeRestauration().setSelectedIndex(0);
+            
+            mettreAJourVue();
+            
+            JOptionPane.showMessageDialog(vue, 
+                "Restauration ajoutée avec succès !", 
+                "Succès", 
+                JOptionPane.INFORMATION_MESSAGE);
+                
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(vue, 
+                "La capacité doit être un nombre entier", 
+                "Erreur", 
+                JOptionPane.ERROR_MESSAGE);
+        }
     }
     
     //-----------------------------

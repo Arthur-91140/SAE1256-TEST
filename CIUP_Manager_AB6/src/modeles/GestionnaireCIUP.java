@@ -3,6 +3,7 @@ package modeles;
 import java.util.*;
 import java.io.*;
 import citeU.*;
+import controleurs.ControleurPrincipal;
 
 /**
  * Modèle principal gérant toutes les données de la CIUP
@@ -22,6 +23,7 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     private ArrayList<citeU.MaisonInternationale> maisonsInternationales;
     private ArrayList<citeU.Restauration> restaurations;
     private ArrayList<citeU.Menu> menus;
+    private ControleurPrincipal controleurPrincipal;
     
     //-----------------------------
     // CONSTRUCTEUR
@@ -180,6 +182,10 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         return menus;
     }
     
+    public void setControleurPrincipal(ControleurPrincipal controleur) {
+        this.controleurPrincipal = controleur;
+    }
+    
     //-----------------------------
     // IMPLÉMENTATION INTERFACE
     //-----------------------------
@@ -212,7 +218,9 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     
     @Override
     public void notifierObservateurs() {
-        // Implémentation basique - peut être étendue avec le pattern Observer
         sauvegarderDonnees();
+        if (controleurPrincipal != null) {
+            controleurPrincipal.rafraichirVues();
+        }
     }
 }

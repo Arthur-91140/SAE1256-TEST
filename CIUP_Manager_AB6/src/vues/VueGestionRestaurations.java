@@ -5,6 +5,7 @@ import javax.swing.table.*;
 import java.awt.*;
 import java.util.ArrayList;
 import citeU.*;
+import citeU.Menu;
 
 /**
  * Vue pour la gestion des restaurations et menus
@@ -18,6 +19,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     public static final String ACTION_AJOUTER_MENU = "AJOUTER_MENU";
     public static final String ACTION_SUPPRIMER_MENU = "SUPPRIMER_MENU";
     public static final String ACTION_AFFECTER_MENU = "AFFECTER_MENU";
+    public static final String ACTION_AJOUTER_RESTAURATION = "AJOUTER_RESTAURATION";
     
     //-----------------------------
     // ATTRIBUTS
@@ -26,6 +28,11 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     private DefaultTableModel modeleTableRestaurations;
     private JTable tableMenus;
     private DefaultTableModel modeleTableMenus;
+    
+    private JTextField champNomRestauration;
+    private JTextField champCapaciteRestauration;
+    private JComboBox<String> comboTypeRestauration;
+    private JButton boutonAjouterRestauration;
     
     // Formulaire menu
     private JTextField champNomMenu;
@@ -97,6 +104,13 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         boutonAjouterMenu.setActionCommand(ACTION_AJOUTER_MENU);
         boutonSupprimerMenu.setActionCommand(ACTION_SUPPRIMER_MENU);
         boutonAffecterMenu.setActionCommand(ACTION_AFFECTER_MENU);
+        
+        
+        champNomRestauration = new JTextField(15);
+        champCapaciteRestauration = new JTextField(15);
+        comboTypeRestauration = new JComboBox<>(new String[]{"RestoU", "Cafétéria"});
+        boutonAjouterRestauration = new JButton("Ajouter Restauration");
+        boutonAjouterRestauration.setActionCommand(ACTION_AJOUTER_RESTAURATION);
     }
     
     private void configurerLayout() {
@@ -142,6 +156,37 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     }
     
     private JPanel creerFormulaireMenu() {
+        JPanel formulairePrincipal = new JPanel();
+        formulairePrincipal.setLayout(new BoxLayout(formulairePrincipal, BoxLayout.Y_AXIS));
+        
+        // Formulaire restauration
+        JPanel formulaireRestaurant = new JPanel(new GridBagLayout());
+        formulaireRestaurant.setBorder(BorderFactory.createTitledBorder("Ajouter une Restauration"));
+        
+        GridBagConstraints gbcResto = new GridBagConstraints();
+        gbcResto.insets = new Insets(5, 5, 5, 5);
+        
+        gbcResto.gridx = 0; gbcResto.gridy = 0;
+        formulaireRestaurant.add(new JLabel("Nom:"), gbcResto);
+        gbcResto.gridx = 1;
+        formulaireRestaurant.add(champNomRestauration, gbcResto);
+        
+        gbcResto.gridx = 0; gbcResto.gridy = 1;
+        formulaireRestaurant.add(new JLabel("Capacité:"), gbcResto);
+        gbcResto.gridx = 1;
+        formulaireRestaurant.add(champCapaciteRestauration, gbcResto);
+        
+        gbcResto.gridx = 0; gbcResto.gridy = 2;
+        formulaireRestaurant.add(new JLabel("Type:"), gbcResto);
+        gbcResto.gridx = 1;
+        formulaireRestaurant.add(comboTypeRestauration, gbcResto);
+        
+        gbcResto.gridx = 0; gbcResto.gridy = 3; gbcResto.gridwidth = 2;
+        formulaireRestaurant.add(boutonAjouterRestauration, gbcResto);
+        
+        formulairePrincipal.add(formulaireRestaurant);
+        formulairePrincipal.add(Box.createVerticalStrut(10));
+    	
         JPanel formulaire = new JPanel();
         formulaire.setLayout(new BoxLayout(formulaire, BoxLayout.Y_AXIS));
         formulaire.setBorder(BorderFactory.createTitledBorder("Gestion des Menus"));
@@ -364,6 +409,11 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     public JTable getTableMenus() {
         return tableMenus;
     }
+    
+    public JTextField getChampNomRestauration() { return champNomRestauration; }
+    public JTextField getChampCapaciteRestauration() { return champCapaciteRestauration; }
+    public JComboBox<String> getComboTypeRestauration() { return comboTypeRestauration; }
+    public JButton getBoutonAjouterRestauration() { return boutonAjouterRestauration; }
     
     //-----------------------------
     // IMPLÉMENTATION INTERFACE

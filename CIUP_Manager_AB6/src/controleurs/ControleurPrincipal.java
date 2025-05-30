@@ -39,6 +39,8 @@ public class ControleurPrincipal implements ActionListener {
         
         // Mise à jour initiale des vues
         mettreAJourToutesLesVues();
+        
+        modele.setControleurPrincipal(this);
     }
     
     //-----------------------------
