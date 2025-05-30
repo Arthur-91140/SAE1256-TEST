@@ -176,7 +176,11 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         add(splitPrincipal, BorderLayout.CENTER);
     }
     
-<<<<<<< HEAD
+    /**
+     * Crée le panneau contenant les formulaires de gestion.
+     * 
+     * @return Le panneau avec les formulaires restauration et menu côte à côte
+     */
     private JPanel creerPanneauFormulaires() {
         JPanel panneauPrincipal = new JPanel(new GridLayout(1, 2, 10, 0));
         
@@ -192,6 +196,11 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         return panneauPrincipal;
     }
     
+    /**
+     * Crée le formulaire de gestion des restaurations.
+     * 
+     * @return Le panneau contenant le formulaire d'ajout de restauration
+     */
     private JPanel creerFormulaireRestauration() {
         JPanel formulaireRestaurant = new JPanel();
         formulaireRestaurant.setLayout(new BoxLayout(formulaireRestaurant, BoxLayout.Y_AXIS));
@@ -238,14 +247,11 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         return formulaireRestaurant;
     }
     
-=======
-
-	/**
-	 * Crée le formulaire de gestion des menus et restaurations.
-	 * 
-	 * @return Le panneau contenant les formulaires d'ajout de menu et de restauration
-	 */
->>>>>>> 3ff6ea8cc7b386f893adee0fadb273b481da1a28
+    /**
+     * Crée le formulaire de gestion des menus.
+     * 
+     * @return Le panneau contenant le formulaire d'ajout et d'affectation de menu
+     */
     private JPanel creerFormulaireMenu() {
         JPanel formulaire = new JPanel();
         formulaire.setLayout(new BoxLayout(formulaire, BoxLayout.Y_AXIS));
@@ -324,10 +330,9 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     //-----------------------------
     
     /**
-     * Vide tous les champs du formulaire de menu.
+     * Met à jour le tableau des restaurations.
      * 
-     * Remet les champs de saisie à leur état initial et
-     * repose la sélection de la combobox sur l'index 0.
+     * @param restaurations La liste des restaurations à afficher
      */
     public void mettreAJourTableauRestaurations(ArrayList<Restauration> restaurations) {
         modeleTableRestaurations.setRowCount(0);
@@ -348,7 +353,9 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Met à jour le tableau des menus pour une restauration
+     * Met à jour le tableau des menus pour une restauration donnée.
+     * 
+     * @param restauration La restauration dont on veut afficher les menus
      */
     public void mettreAJourTableauMenus(Restauration restauration) {
         modeleTableMenus.setRowCount(0);
@@ -368,7 +375,9 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Met à jour la liste des restaurations dans la combobox
+     * Met à jour la liste des restaurations dans la combobox.
+     * 
+     * @param restaurations La liste des restaurations disponibles
      */
     public void mettreAJourComboRestaurations(ArrayList<Restauration> restaurations) {
         comboRestaurations.removeAllItems();
@@ -380,8 +389,9 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     }
     
     /**
-<<<<<<< HEAD
-     * Met à jour la liste de tous les menus dans la combobox
+     * Met à jour la liste de tous les menus dans la combobox.
+     * 
+     * @param menus La liste de tous les menus disponibles
      */
     public void mettreAJourComboTousLesMenus(ArrayList<Menu> menus) {
         comboTousLesMenus.removeAllItems();
@@ -393,7 +403,9 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Met à jour la liste des maisons dans la combobox
+     * Met à jour la liste des maisons dans la combobox.
+     * 
+     * @param maisons La liste de toutes les maisons disponibles
      */
     public void mettreAJourComboMaisons(ArrayList<Maison> maisons) {
         comboMaisonsPourRestauration.removeAllItems();
@@ -405,15 +417,11 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Vide le formulaire
-     */
-=======
      * Vide tous les champs du formulaire de menu.
      * 
      * Remet les champs de saisie à leur état initial et
-     * repose la sélection de la combobox sur l'index 0.
-     */	
->>>>>>> 3ff6ea8cc7b386f893adee0fadb273b481da1a28
+     * repose la sélection des combobox sur l'index 0.
+     */
     public void viderFormulaire() {
         champNomMenu.setText("");
         champEntree.setText("");
@@ -431,8 +439,8 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     /**
      * Valide les données saisies dans le formulaire de menu.
      * 
-     * Vérifie que tous les champs obligatoires sont remplis,
-     * que le prix est un nombre valide et qu'une restauration est sélectionnée.
+     * Vérifie que tous les champs obligatoires sont remplis
+     * et que le prix est un nombre valide.
      * 
      * @return true si le formulaire est valide, false sinon
      */
@@ -538,18 +546,20 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         return comboRestaurations;
     }
     
-<<<<<<< HEAD
+    /**
+     * Obtient la combobox de sélection de tous les menus.
+     * 
+     * @return La JComboBox contenant la liste de tous les menus
+     */
     public JComboBox<String> getComboTousLesMenus() {
         return comboTousLesMenus;
     }
     
-=======
     /**
      * Obtient le bouton d'ajout de menu.
      * 
      * @return Le JButton pour ajouter un menu
      */
->>>>>>> 3ff6ea8cc7b386f893adee0fadb273b481da1a28
     public JButton getBoutonAjouterMenu() {
         return boutonAjouterMenu;
     }
@@ -581,68 +591,68 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         return tableRestaurations;
     }
     
-	/**
-	 * Obtient le tableau des menus.
-	 * 
-	 * @return La JTable affichant les menus
-	 */
+    /**
+     * Obtient le tableau des menus.
+     * 
+     * @return La JTable affichant les menus
+     */
     public JTable getTableMenus() {
         return tableMenus;
     }
     
-<<<<<<< HEAD
-    public JTextField getChampNomRestauration() { 
-        return champNomRestauration; 
-    }
-    
-    public JTextField getChampCapaciteRestauration() { 
-        return champCapaciteRestauration; 
-    }
-    
-    public JComboBox<String> getComboTypeRestauration() { 
-        return comboTypeRestauration; 
-    }
-    
-    public JComboBox<String> getComboMaisonsPourRestauration() {
-        return comboMaisonsPourRestauration;
-    }
-    
-    public JButton getBoutonAjouterRestauration() { 
-        return boutonAjouterRestauration; 
-    }
-    
-    public JButton getBoutonAffecterRestaurationMaison() {
-        return boutonAffecterRestaurationMaison;
-    }
-=======
     /**
      * Obtient le champ de saisie du nom de restauration.
      * 
      * @return Le JTextField pour le nom de restauration
      */
-    public JTextField getChampNomRestauration() { return champNomRestauration; }
+    public JTextField getChampNomRestauration() { 
+        return champNomRestauration; 
+    }
     
     /**
      * Obtient le champ de saisie de la capacité de restauration.
      * 
      * @return Le JTextField pour la capacité
      */
-    public JTextField getChampCapaciteRestauration() { return champCapaciteRestauration; }
+    public JTextField getChampCapaciteRestauration() { 
+        return champCapaciteRestauration; 
+    }
     
     /**
      * Obtient la combobox de sélection du type de restauration.
      * 
      * @return La JComboBox pour le type (RestoU/Cafétéria)
      */
-    public JComboBox<String> getComboTypeRestauration() { return comboTypeRestauration; }
+    public JComboBox<String> getComboTypeRestauration() { 
+        return comboTypeRestauration; 
+    }
+    
+    /**
+     * Obtient la combobox de sélection des maisons pour restauration.
+     * 
+     * @return La JComboBox contenant la liste des maisons
+     */
+    public JComboBox<String> getComboMaisonsPourRestauration() {
+        return comboMaisonsPourRestauration;
+    }
     
     /**
      * Obtient le bouton d'ajout de restauration.
      * 
      * @return Le JButton pour ajouter une restauration
      */
-    public JButton getBoutonAjouterRestauration() { return boutonAjouterRestauration; }
->>>>>>> 3ff6ea8cc7b386f893adee0fadb273b481da1a28
+    public JButton getBoutonAjouterRestauration() { 
+        return boutonAjouterRestauration; 
+    }
+    
+    /**
+     * Obtient le bouton d'affectation de restauration à une maison.
+     * 
+     * @return Le JButton pour affecter une restauration
+     */
+    public JButton getBoutonAffecterRestaurationMaison() {
+        return boutonAffecterRestaurationMaison;
+    }
     
     //-----------------------------
     // IMPLÉMENTATION INTERFACE
