@@ -22,6 +22,13 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
     //-----------------------------
     // CONSTRUCTEUR
     //-----------------------------
+    
+    /**
+     * Constructeur du contrôleur des restaurations
+     * Configure les écouteurs et initialise la vue
+     * @param modele le gestionnaire CIUP contenant les données
+     * @param vue la vue de gestion des restaurations
+     */
     public ControleurRestaurations(GestionnaireCIUP modele, VueGestionRestaurations vue) {
         this.modele = modele;
         this.vue = vue;
@@ -34,6 +41,9 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
     // MÉTHODES D'INITIALISATION
     //-----------------------------
     
+    /**
+     * Configure les écouteurs d'événements pour les boutons et tableaux
+     */
     private void configurerEcouteurs() {
         // Écouteurs pour les boutons
         vue.getBoutonAjouterMenu().addActionListener(this);
@@ -50,6 +60,10 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
     // GESTION DES ÉVÉNEMENTS
     //-----------------------------
     
+    /**
+     * Gère les événements des boutons (ajouter menu, supprimer menu, etc.)
+     * @param e l'événement d'action déclenché
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
@@ -71,6 +85,11 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         }
     }
     
+    /**
+     * Gère les changements de sélection dans le tableau des restaurations
+     * Met à jour automatiquement l'affichage des menus correspondants
+     * @param e l'événement de changement de sélection
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
@@ -91,6 +110,11 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
     // MÉTHODES PRIVÉES
     //-----------------------------
     
+
+	/**
+	 * Ajoute un nouveau menu après validation du formulaire
+	 * Affecte automatiquement le menu à la restauration sélectionnée
+	 */
     private void ajouterMenu() {
         if (vue.validerFormulaire()) {
             String nom = vue.getChampNomMenu().getText().trim();
@@ -118,7 +142,10 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         }
     }
 
-    
+    /**
+     * Supprime le menu sélectionné après confirmation de l'utilisateur
+     * Met à jour le modèle et rafraîchit la vue
+     */
     private void supprimerMenu() {
         int ligneRestauration = vue.getRestaurationSelectionnee();
         int ligneMenu = vue.getMenuSelectionne();
@@ -161,6 +188,11 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         }
     }
     
+
+	/**
+	 * Affecte un menu existant à une restauration différente
+	 * Vérifie que le menu n'est pas déjà présent dans la restauration cible
+	 */
     private void affecterMenu() {
         int ligneMenu = vue.getMenuSelectionne();
         if (ligneMenu < 0) {
@@ -216,6 +248,10 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             JOptionPane.INFORMATION_MESSAGE);
     }
 
+    /**
+     * Ajoute une nouvelle restauration (RestoU ou Cafet) selon le type sélectionné
+     * Valide les données saisies avant l'ajout
+     */
     private void ajouterRestauration() {
         String nom = vue.getChampNomRestauration().getText().trim();
         String capaciteStr = vue.getChampCapaciteRestauration().getText().trim();

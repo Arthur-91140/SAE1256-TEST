@@ -45,6 +45,12 @@ public class VuePrincipale extends JFrame implements InterfaceVue {
     // MÉTHODES D'INITIALISATION
     //-----------------------------
     
+    /**
+     * Initialise l'interface utilisateur principale.
+     * 
+     * Crée le menu, les vues spécialisées et configure les onglets
+     * de navigation de l'application.
+     */
     private void initialiserInterface() {
         // Création du menu
         creerMenu();
@@ -69,6 +75,12 @@ public class VuePrincipale extends JFrame implements InterfaceVue {
         ajouterPanneauAccueil();
     }
     
+    /**
+     * Crée la barre de menus avec les options Fichier et Aide.
+     * 
+     * Configure les commandes d'action pour la sauvegarde,
+     * la fermeture de l'application et l'affichage des informations.
+     */
     private void creerMenu() {
         menuBar = new JMenuBar();
         
@@ -97,6 +109,12 @@ public class VuePrincipale extends JFrame implements InterfaceVue {
         setJMenuBar(menuBar);
     }
     
+    /**
+     * Ajoute le panneau d'accueil avec les informations générales.
+     * 
+     * Crée un onglet d'introduction présentant les fonctionnalités
+     * de l'application CIUP Manager.
+     */
     private void ajouterPanneauAccueil() {
         JPanel panneauAccueil = new JPanel(new BorderLayout());
         panneauAccueil.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -128,6 +146,12 @@ public class VuePrincipale extends JFrame implements InterfaceVue {
         ongletsPrincipaux.setSelectedIndex(0);
     }
     
+    /**
+     * Configure les propriétés de la fenêtre principale.
+     * 
+     * Définit le titre, la taille, la position et l'icône
+     * de l'application.
+     */
     private void configurerFenetre() {
         setTitle("CIUP Manager - Gestionnaire de la Cité Internationale");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -147,30 +171,65 @@ public class VuePrincipale extends JFrame implements InterfaceVue {
     // ACCESSEURS
     //-----------------------------
     
+    /**
+     * Obtient l'élément de menu Sauvegarder.
+     * 
+     * @return Le JMenuItem pour la sauvegarde
+     */
     public JMenuItem getMenuSauvegarder() {
         return menuSauvegarder;
     }
     
+    /**
+     * Obtient l'élément de menu Quitter.
+     * 
+     * @return Le JMenuItem pour quitter l'application
+     */
     public JMenuItem getMenuQuitter() {
         return menuQuitter;
     }
     
+    /**
+     * Obtient l'élément de menu À propos.
+     * 
+     * @return Le JMenuItem pour les informations de l'application
+     */
     public JMenuItem getMenuAPropos() {
         return menuAPropos;
     }
     
+    /**
+     * Obtient la vue de gestion des étudiants.
+     * 
+     * @return L'instance de VueGestionEtudiants
+     */
     public VueGestionEtudiants getVueEtudiants() {
         return vueEtudiants;
     }
     
+    /**
+     * Obtient la vue de gestion des maisons.
+     * 
+     * @return L'instance de VueGestionMaisons
+     */
     public VueGestionMaisons getVueMaisons() {
         return vueMaisons;
     }
     
+    /**
+     * Obtient la vue de gestion des restaurations.
+     * 
+     * @return L'instance de VueGestionRestaurations
+     */
     public VueGestionRestaurations getVueRestaurations() {
         return vueRestaurations;
     }
     
+    /**
+     * Obtient la vue des statistiques.
+     * 
+     * @return L'instance de VueStatistiques
+     */
     public VueStatistiques getVueStatistiques() {
         return vueStatistiques;
     }

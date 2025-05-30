@@ -36,6 +36,12 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
     // MÉTHODES D'INITIALISATION
     //-----------------------------
     
+    /**
+     * Initialise tous les composants graphiques de la vue statistiques.
+     * 
+     * Crée les labels pour les statistiques générales et les panneaux
+     * pour l'affichage des graphiques de répartition.
+     */
     private void initialiserComposants() {
         // Labels pour les statistiques générales
         labelNombreEtudiants = new JLabel("0");
@@ -53,6 +59,12 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
         panneauNationalites.setBorder(BorderFactory.createTitledBorder("Répartition par Nationalité"));
     }
     
+    /**
+     * Configure la disposition de l'interface statistiques.
+     * 
+     * Organise les composants en trois sections : statistiques générales,
+     * taux d'occupation et répartition par nationalité.
+     */
     private void configurerLayout() {
         // Panneau principal avec trois sections
         JPanel panneauPrincipal = new JPanel(new BorderLayout());
@@ -73,6 +85,14 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
         add(panneauPrincipal, BorderLayout.CENTER);
     }
     
+    /**
+     * Crée le panneau d'affichage des statistiques générales.
+     * 
+     * Construit une grille avec les titres et valeurs des principales
+     * métriques de l'application.
+     * 
+     * @return Le JPanel contenant les statistiques générales
+     */
     private JPanel creerPanneauStatistiquesGenerales() {
         JPanel panneau = new JPanel(new GridLayout(2, 4, 10, 10));
         panneau.setBorder(BorderFactory.createTitledBorder("Statistiques Générales"));
@@ -124,7 +144,12 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
     //-----------------------------
     
     /**
-     * Met à jour les statistiques générales
+     * Met à jour les statistiques générales affichées.
+     * 
+     * @param nbEtudiants Le nombre total d'étudiants
+     * @param nbMaisons Le nombre total de maisons
+     * @param nbRestaurations Le nombre total de restaurations
+     * @param prixMoyen Le prix moyen des menus
      */
     public void mettreAJourStatistiquesGenerales(int nbEtudiants, int nbMaisons, 
                                                  int nbRestaurations, double prixMoyen) {
@@ -135,7 +160,13 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Met à jour l'affichage des taux d'occupation
+     * Met à jour l'affichage des taux d'occupation des maisons.
+     * 
+     * Crée des barres de progression colorées selon le niveau d'occupation
+     * pour chaque maison de la liste.
+     * 
+     * @param nomsMaisons La liste des noms des maisons
+     * @param tauxOccupation La liste des taux d'occupation correspondants
      */
     public void mettreAJourTauxOccupation(java.util.List<String> nomsMaisons, 
                                          java.util.List<Double> tauxOccupation) {
@@ -174,9 +205,15 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
         panneauTauxOccupation.repaint();
     }
     
-    /**
-     * Met à jour l'affichage de la répartition par nationalité
-     */
+
+	/**
+	 * Met à jour l'affichage de la répartition par nationalité.
+	 * 
+	 * Crée des barres de progression montrant la distribution
+	 * des étudiants selon leur nationalité.
+	 * 
+	 * @param repartition Map associant chaque nationalité à son effectif
+	 */
     public void mettreAJourRepartitionNationalites(Map<String, Integer> repartition) {
         panneauNationalites.removeAll();
         
@@ -215,7 +252,11 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
     }
     
     /**
-     * Affiche un message d'information
+     * Affiche un message d'information temporaire.
+     * 
+     * Le message disparaît automatiquement après 3 secondes.
+     * 
+     * @param message Le texte du message à afficher
      */
     public void afficherMessage(String message) {
         JLabel labelMessage = new JLabel(message, SwingConstants.CENTER);
@@ -242,6 +283,12 @@ public class VueStatistiques extends JPanel implements InterfaceVue {
     // IMPLÉMENTATION INTERFACE
     //-----------------------------
     
+    /**
+     * Redessine la vue et met à jour l'affichage.
+     * 
+     * Cette méthode fait partie de l'interface InterfaceVue et permet
+     * de rafraîchir l'affichage de tous les composants de la vue.
+     */
     @Override
     public void redessiner() {
         repaint();

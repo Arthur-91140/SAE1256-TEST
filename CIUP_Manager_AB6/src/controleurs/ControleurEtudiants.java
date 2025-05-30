@@ -9,7 +9,13 @@ import vues.*;
 import citeU.*;
 
 /**
- * Contrôleur pour la gestion des étudiants
+ * Contrôleur pour la gestion des étudiants dans l'interface graphique.
+ * 
+ * Cette classe implémente le pattern MVC en gérant les interactions entre
+ * le modèle de données (GestionnaireCIUP) et la vue (VueGestionEtudiants).
+ * Elle gère les actions utilisateur comme l'ajout, la modification, la suppression
+ * et l'affectation des étudiants aux maisons.
+ * 
  * @author Arthur Pruvost
  */
 public class ControleurEtudiants implements ActionListener, ListSelectionListener {
@@ -23,6 +29,16 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
     //-----------------------------
     // CONSTRUCTEUR
     //-----------------------------
+    
+    /**
+     * Construit un nouveau contrôleur pour la gestion des étudiants.
+     * 
+     * Initialise les références au modèle et à la vue, configure les écouteurs
+     * d'événements et met à jour l'affichage initial.
+     * 
+     * @param modele Le gestionnaire CIUP contenant les données
+     * @param vue La vue pour l'interface de gestion des étudiants
+     */
     public ControleurEtudiants(GestionnaireCIUP modele, VueGestionEtudiants vue) {
         this.modele = modele;
         this.vue = vue;
@@ -35,6 +51,12 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
     // MÉTHODES D'INITIALISATION
     //-----------------------------
     
+    /**
+     * Configure tous les écouteurs d'événements pour l'interface utilisateur.
+     * 
+     * Associe les actions des boutons, la sélection dans le tableau et
+     * la recherche en temps réel aux méthodes correspondantes du contrôleur.
+     */
     private void configurerEcouteurs() {
         // Écouteurs pour les boutons
         vue.getBoutonAjouter().addActionListener(this);
@@ -61,6 +83,14 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
     // GESTION DES ÉVÉNEMENTS
     //-----------------------------
     
+    /**
+     * Gère les événements d'action déclenchés par les boutons.
+     * 
+     * Dirige l'exécution vers la méthode appropriée selon l'action
+     * déclenchée (ajouter, modifier, supprimer, affecter, rechercher).
+     * 
+     * @param e L'événement d'action contenant la commande à exécuter
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String action = e.getActionCommand();
@@ -84,6 +114,14 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
         }
     }
     
+    /**
+     * Gère les changements de sélection dans le tableau des étudiants.
+     * 
+     * Met à jour le formulaire avec les données de l'étudiant sélectionné
+     * pour permettre la modification ou l'affectation.
+     * 
+     * @param e L'événement de changement de sélection
+     */
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
@@ -99,6 +137,13 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
     // MÉTHODES PRIVÉES
     //-----------------------------
     
+    /**
+     * Ajoute un nouvel étudiant au système.
+     * 
+     * Valide les données du formulaire, crée un nouvel étudiant et
+     * l'ajoute au modèle. Si une maison est sélectionnée et disponible,
+     * l'étudiant y est automatiquement affecté.
+     */
     private void ajouterEtudiant() {
         if (validerFormulaire()) {
             String nom = vue.getChampNom().getText().trim();
@@ -132,6 +177,12 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
         }
     }
     
+    /**
+     * Modifie les informations de l'étudiant sélectionné.
+     * 
+     * Vérifie qu'un étudiant est sélectionné, valide les nouvelles données
+     * et met à jour l'objet étudiant correspondant.
+     */
     private void modifierEtudiant() {
         int ligneSelectionnee = vue.getEtudiantSelectionne();
         if (ligneSelectionnee < 0) {
@@ -159,6 +210,12 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
         }
     }
     
+    /**
+     * Supprime l'étudiant sélectionné après confirmation.
+     * 
+     * Affiche une boîte de dialogue de confirmation avant de procéder
+     * à la suppression définitive de l'étudiant du système.
+     */
     private void supprimerEtudiant() {
         int ligneSelectionnee = vue.getEtudiantSelectionne();
         if (ligneSelectionnee < 0) {
@@ -189,6 +246,12 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
         }
     }
     
+    /**
+     * Affecte l'étudiant sélectionné à une maison.
+     * 
+     * Vérifie la disponibilité de la maison sélectionnée, retire l'étudiant
+     * de son ancienne maison si nécessaire, et l'affecte à la nouvelle.
+     */
     private void affecterEtudiant() {
         int ligneSelectionnee = vue.getEtudiantSelectionne();
         if (ligneSelectionnee < 0) {
@@ -237,6 +300,12 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
             JOptionPane.INFORMATION_MESSAGE);
     }
     
+    /**
+     * Recherche des étudiants par nom ou prénom.
+     * 
+     * Filtre la liste des étudiants selon le texte de recherche saisi
+     * et met à jour l'affichage du tableau avec les résultats.
+     */
     private void rechercherEtudiant() {
         String nomRecherche = vue.getChampRecherche().getText().trim();
         
@@ -263,6 +332,14 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
         }
     }
     
+    /**
+     * Valide les données saisies dans le formulaire.
+     * 
+     * Vérifie que tous les champs obligatoires (nom, prénom, nationalité)
+     * sont remplis et affiche des messages d'erreur appropriés.
+     * 
+     * @return true si toutes les validations passent, false sinon
+     */
     private boolean validerFormulaire() {
         if (vue.getChampNom().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vue, 
@@ -294,6 +371,9 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
         return true;
     }
     
+    /**
+     * Met à jour l'affichage du tableau avec la liste complète des étudiants.
+     */
     private void mettreAJourTableau() {
         vue.mettreAJourTableau(modele.getEtudiants());
     }
@@ -303,7 +383,10 @@ public class ControleurEtudiants implements ActionListener, ListSelectionListene
     //-----------------------------
     
     /**
-     * Met à jour la vue complète
+     * Met à jour l'ensemble de l'interface utilisateur.
+     * 
+     * Actualise le tableau des étudiants, la liste des maisons disponibles
+     * et redessine l'interface pour refléter les dernières modifications.
      */
     public void mettreAJourVue() {
         mettreAJourTableau();

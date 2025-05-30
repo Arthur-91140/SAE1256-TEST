@@ -3,68 +3,137 @@ package citeU;
 import java.util.ArrayList;
 import java.io.Serializable;
 
+/**
+ * Représente un service de restauration dans une maison de la Cité Universitaire.
+ * 
+ * Cette classe gère les menus proposés par un service de restauration et maintient
+ * la relation avec la maison qui l'héberge. Elle sert de classe parent pour les
+ * types spécialisés de restauration comme RestoU et Cafet.
+ */
 public class Restauration implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	protected ArrayList<Menu> sesMenus;
-	protected Maison saMaison;
-	protected String nom;
-	protected int capacite;
+    protected ArrayList<Menu> sesMenus;
+    protected Maison saMaison;
+    protected String nom;
+    protected int capacite;
 
-	public Restauration(String nom, int capacite) {
-		this.nom = nom;
-		this.capacite = capacite;
-		this.sesMenus = new ArrayList<Menu>();
-	}
+    /**
+     * Construit un nouveau service de restauration.
+     * 
+     * @param nom le nom du service de restauration
+     * @param capacite la capacité d'accueil en nombre de personnes
+     */
+    public Restauration(String nom, int capacite) {
+        this.nom = nom;
+        this.capacite = capacite;
+        this.sesMenus = new ArrayList<Menu>();
+    }
 
-	public void afficheMenus() {
-		System.out.println("Liste des menus de la restauration: " + nom);
-		for (Menu menu : sesMenus) {
-			System.out.println("Nom: " + menu.getNom() + ", Entrée: " + menu.getEntree() + ", Plat: " + menu.getPlat()
-					+ ", Dessert: " + menu.getDessert() + ", Prix: " + menu.getPrix());
-		}
-	}
+    /**
+     * Affiche la liste complète des menus proposés par cette restauration.
+     * Pour chaque menu, affiche le nom, l'entrée, le plat, le dessert et le prix.
+     */
+    public void afficheMenus() {
+        System.out.println("Liste des menus de la restauration: " + nom);
+        for (Menu menu : sesMenus) {
+            System.out.println("Nom: " + menu.getNom() + ", Entrée: " + menu.getEntree() + ", Plat: " + menu.getPlat()
+                    + ", Dessert: " + menu.getDessert() + ", Prix: " + menu.getPrix());
+        }
+    }
 
-	public void ajouteMenu(Menu menu) {
-		sesMenus.add(menu);
-		ArrayList<Restauration> listeRestauration = menu.getSaRestauration();
-		listeRestauration.add(this);
-		menu.setSaRestauration(listeRestauration);
-	}
+    /**
+     * Ajoute un menu à cette restauration.
+     * Établit également la relation bidirectionnelle en ajoutant cette restauration
+     * à la liste des restaurations qui proposent ce menu.
+     * 
+     * @param menu le menu à ajouter
+     */
+    public void ajouteMenu(Menu menu) {
+        sesMenus.add(menu);
+        ArrayList<Restauration> listeRestauration = menu.getSaRestauration();
+        listeRestauration.add(this);
+        menu.setSaRestauration(listeRestauration);
+    }
 
-	public void retireMenu(Menu menu) {
-		sesMenus.remove(menu);
-	}
+    /**
+     * Retire un menu de cette restauration.
+     * 
+     * @param menu le menu à retirer
+     */
+    public void retireMenu(Menu menu) {
+        sesMenus.remove(menu);
+    }
 
-	public ArrayList<Menu> getSesMenus() {
-		return sesMenus;
-	}
+    /**
+     * Récupère la liste des menus de cette restauration.
+     * 
+     * @return la liste des menus
+     */
+    public ArrayList<Menu> getSesMenus() {
+        return sesMenus;
+    }
 
-	public void setSesMenus(ArrayList<Menu> sesMenus) {
-		this.sesMenus = sesMenus;
-	}
+    /**
+     * Définit la liste des menus pour cette restauration.
+     * 
+     * @param sesMenus la nouvelle liste de menus
+     */
+    public void setSesMenus(ArrayList<Menu> sesMenus) {
+        this.sesMenus = sesMenus;
+    }
 
-	public Maison getSaMaison() {
-		return saMaison;
-	}
+    /**
+     * Récupère la maison qui héberge cette restauration.
+     * 
+     * @return la maison parent
+     */
+    public Maison getSaMaison() {
+        return saMaison;
+    }
 
-	public void setSaMaison(Maison saMaison) {
-		this.saMaison = saMaison;
-	}
+    /**
+     * Définit la maison qui héberge cette restauration.
+     * 
+     * @param saMaison la maison parent
+     */
+    public void setSaMaison(Maison saMaison) {
+        this.saMaison = saMaison;
+    }
 
-	public String getNom() {
-		return nom;
-	}
+    /**
+     * Récupère le nom de la restauration.
+     * 
+     * @return le nom
+     */
+    public String getNom() {
+        return nom;
+    }
 
-	public void setNom(String nom) {
-		this.nom = nom;
-	}
+    /**
+     * Définit le nom de la restauration.
+     * 
+     * @param nom le nouveau nom
+     */
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
 
-	public int getCapacite() {
-		return capacite;
-	}
+    /**
+     * Récupère la capacité d'accueil de la restauration.
+     * 
+     * @return la capacité en nombre de personnes
+     */
+    public int getCapacite() {
+        return capacite;
+    }
 
-	public void setCapacite(int capacite) {
-		this.capacite = capacite;
-	}
+    /**
+     * Définit la capacité d'accueil de la restauration.
+     * 
+     * @param capacite la nouvelle capacité
+     */
+    public void setCapacite(int capacite) {
+        this.capacite = capacite;
+    }
 }

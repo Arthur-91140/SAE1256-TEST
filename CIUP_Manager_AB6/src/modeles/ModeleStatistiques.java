@@ -15,6 +15,10 @@ public class ModeleStatistiques {
     // CONSTRUCTEUR
     //-----------------------------
     
+    /**
+     * Constructeur du modèle de statistiques
+     * @param gestionnaire le gestionnaire CIUP contenant les données
+     */
     public ModeleStatistiques(GestionnaireCIUP gestionnaire) {
         this.gestionnaire = gestionnaire;
     }
@@ -25,13 +29,15 @@ public class ModeleStatistiques {
     
     /**
      * Calcule le nombre total d'étudiants
+     * @return le nombre total d'étudiants enregistrés
      */
     public int getNombreTotalEtudiants() {
         return gestionnaire.getEtudiants().size();
     }
     
     /**
-     * Calcule le nombre total de maisons
+     * Calcule le nombre total de maisons (étudiantes et internationales)
+     * @return le nombre total de maisons
      */
     public int getNombreTotalMaisons() {
         return gestionnaire.getMaisonsEtudiants().size() + 
@@ -40,6 +46,8 @@ public class ModeleStatistiques {
     
     /**
      * Calcule le taux d'occupation d'une maison d'étudiants
+     * @param maison la maison dont calculer le taux d'occupation
+     * @return le taux d'occupation en pourcentage (0.0 à 100.0)
      */
     public double getTauxOccupation(MaisonEtudiant maison) {
         if (maison.getNombreChambres() == 0) return 0.0;
@@ -48,6 +56,7 @@ public class ModeleStatistiques {
     
     /**
      * Calcule la répartition des étudiants par nationalité
+     * @return Map associant chaque nationalité au nombre d'étudiants correspondant
      */
     public Map<String, Integer> getRepartitionParNationalite() {
         Map<String, Integer> repartition = new HashMap<>();
@@ -62,6 +71,7 @@ public class ModeleStatistiques {
     
     /**
      * Calcule le nombre moyen de menus par restaurant
+     * @return le nombre moyen de menus par restaurant, 0.0 si aucun restaurant
      */
     public double getNombreMoyenMenusParRestaurant() {
         ArrayList<Restauration> restaurants = gestionnaire.getRestaurations();
@@ -77,6 +87,7 @@ public class ModeleStatistiques {
     
     /**
      * Trouve les maisons avec des places disponibles
+     * @return ArrayList des maisons d'étudiants ayant des places libres
      */
     public ArrayList<MaisonEtudiant> getMaisonsAvecPlacesDisponibles() {
         ArrayList<MaisonEtudiant> maisonsDisponibles = new ArrayList<>();
@@ -90,9 +101,11 @@ public class ModeleStatistiques {
         return maisonsDisponibles;
     }
     
-    /**
-     * Calcule le prix moyen des menus
-     */
+
+	/**
+	 * Calcule le prix moyen des menus en évitant les doublons
+	 * @return le prix moyen des menus uniques, 0.0 si aucun menu
+	 */
     public double getPrixMoyenMenus() {
         // Utiliser un Set pour éviter de compter les menus en double
         Set<Menu> menusUniques = new HashSet<>();
