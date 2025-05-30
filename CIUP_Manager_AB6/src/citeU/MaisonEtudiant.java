@@ -1,8 +1,10 @@
 package citeU;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class MaisonEtudiant extends Maison {
+public class MaisonEtudiant extends Maison implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Etudiant> sesEtudiants;
 	private String nationalite;
