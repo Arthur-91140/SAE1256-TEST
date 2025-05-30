@@ -1,8 +1,10 @@
 package citeU;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Restauration {
+public class Restauration implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	protected ArrayList<Menu> sesMenus;
 	protected Maison saMaison;
