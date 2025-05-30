@@ -98,30 +98,23 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             String plat = vue.getChampPlat().getText().trim();
             String dessert = vue.getChampDessert().getText().trim();
             double prix = Double.parseDouble(vue.getChampPrix().getText().trim());
-            
+        
             Menu nouveauMenu = new Menu(nom, entree, plat, dessert, prix);
             modele.ajouterMenu(nouveauMenu);
-            
-            // Affecter le menu à la restauration sélectionnée OBLIGATOIREMENT
+        
+            // Affecter le menu à la restauration sélectionnée
             int indexRestaurant = vue.getComboRestaurations().getSelectedIndex();
             if (indexRestaurant > 0) { // > 0 car index 0 = "Sélectionner une restauration"
                 Restauration restauration = modele.getRestaurations().get(indexRestaurant - 1);
                 restauration.ajouteMenu(nouveauMenu);
-                
-                // IMPORTANT: Mettre à jour immédiatement si cette restauration est sélectionnée
-                int ligneSelectionnee = vue.getRestaurationSelectionnee();
-                if (ligneSelectionnee == indexRestaurant - 1) {
-                    vue.mettreAJourTableauMenus(restauration);
-                }
-            }
             
+                modele.notifierObservateurs();
+            }
+        
             vue.viderFormulaire();
             mettreAJourVue();
-            
-            JOptionPane.showMessageDialog(vue, 
-                "Menu ajouté avec succès !", 
-                "Succès", 
-                JOptionPane.INFORMATION_MESSAGE);
+        
+            JOptionPane.showMessageDialog(vue, "Menu ajouté avec succès !", "Succès", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
