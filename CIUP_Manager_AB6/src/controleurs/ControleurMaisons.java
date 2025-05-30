@@ -39,7 +39,7 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
         vue.getBoutonAjouterMaisonEtudiant().addActionListener(this);
         vue.getBoutonAjouterMaisonInternationale().addActionListener(this);
         
-        // Écouteurs pour les listes
+        // Écouteurs pour les listes - IMPORTANT : utiliser directement les listes
         vue.getListeMaisonsEtudiants().addListSelectionListener(this);
         vue.getListeMaisonsInternationales().addListSelectionListener(this);
     }
@@ -65,13 +65,14 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (!e.getValueIsAdjusting()) {
-            if (e.getSource() == vue.getListeMaisonsEtudiants().getSelectionModel()) {
+            // Identifier quelle liste a déclenché l'événement
+            if (e.getSource() == vue.getListeMaisonsEtudiants()) {
                 int index = vue.getListeMaisonsEtudiants().getSelectedIndex();
                 if (index >= 0 && index < modele.getMaisonsEtudiants().size()) {
                     MaisonEtudiant maison = modele.getMaisonsEtudiants().get(index);
                     vue.afficherDetailsMaisonEtudiant(maison);
                 }
-            } else if (e.getSource() == vue.getListeMaisonsInternationales().getSelectionModel()) {
+            } else if (e.getSource() == vue.getListeMaisonsInternationales()) {
                 int index = vue.getListeMaisonsInternationales().getSelectedIndex();
                 if (index >= 0 && index < modele.getMaisonsInternationales().size()) {
                     MaisonInternationale maison = modele.getMaisonsInternationales().get(index);
@@ -87,10 +88,11 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     
     private void ajouterMaisonEtudiant() {
         if (validerFormulaireMaisonEtudiant()) {
-            String nom = vue.getChampNomMaison().getText().trim();
+            // Récupérer les bonnes valeurs depuis les bons champs
+            String nom = vue.getChampNomMaisonEtudiant().getText().trim();
             String nationalite = vue.getChampNationalite().getText().trim();
-            String localisation = vue.getChampLocalisation().getText().trim();
-            String directeur = vue.getChampDirecteur().getText().trim();
+            String localisation = vue.getChampLocalisationEtudiant().getText().trim();
+            String directeur = vue.getChampDirecteurEtudiant().getText().trim();
             
             try {
                 int nombreChambres = Integer.parseInt(vue.getChampNombreChambres().getText().trim());
@@ -118,12 +120,10 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     
     private void ajouterMaisonInternationale() {
         if (validerFormulaireMaisonInternationale()) {
-            // Utiliser le champ spécifique aux maisons internationales
-            String nom = vue.getChampNomMaisonInt() != null ? 
-                        vue.getChampNomMaisonInt().getText().trim() : 
-                        vue.getChampNomMaison().getText().trim();
-            String localisation = vue.getChampLocalisation().getText().trim();
-            String directeur = vue.getChampDirecteur().getText().trim();
+            // Récupérer les bonnes valeurs depuis les bons champs
+            String nom = vue.getChampNomMaisonInt().getText().trim();
+            String localisation = vue.getChampLocalisationInt().getText().trim();
+            String directeur = vue.getChampDirecteurInt().getText().trim();
             
             MaisonInternationale nouvelleMaison = new MaisonInternationale(
                 nom, localisation, directeur);
@@ -140,7 +140,7 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     }
     
     private boolean validerFormulaireMaisonEtudiant() {
-        if (vue.getChampNomMaison().getText().trim().isEmpty()) {
+        if (vue.getChampNomMaisonEtudiant().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vue, 
                 "Le nom de la maison est obligatoire", 
                 "Erreur", 
@@ -181,7 +181,7 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
             return false;
         }
         
-        if (vue.getChampLocalisation().getText().trim().isEmpty()) {
+        if (vue.getChampLocalisationEtudiant().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vue, 
                 "La localisation est obligatoire", 
                 "Erreur", 
@@ -189,7 +189,7 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
             return false;
         }
         
-        if (vue.getChampDirecteur().getText().trim().isEmpty()) {
+        if (vue.getChampDirecteurEtudiant().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vue, 
                 "Le nom du directeur est obligatoire", 
                 "Erreur", 
@@ -201,7 +201,7 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
     }
     
     private boolean validerFormulaireMaisonInternationale() {
-        if (vue.getChampNomMaison().getText().trim().isEmpty()) {
+        if (vue.getChampNomMaisonInt().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vue, 
                 "Le nom de la maison est obligatoire", 
                 "Erreur", 
@@ -209,7 +209,7 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
             return false;
         }
         
-        if (vue.getChampLocalisation().getText().trim().isEmpty()) {
+        if (vue.getChampLocalisationInt().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vue, 
                 "La localisation est obligatoire", 
                 "Erreur", 
@@ -217,7 +217,7 @@ public class ControleurMaisons implements ActionListener, ListSelectionListener 
             return false;
         }
         
-        if (vue.getChampDirecteur().getText().trim().isEmpty()) {
+        if (vue.getChampDirecteurInt().getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(vue, 
                 "Le nom du directeur est obligatoire", 
                 "Erreur", 
