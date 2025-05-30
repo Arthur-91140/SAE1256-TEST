@@ -20,6 +20,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     public static final String ACTION_SUPPRIMER_MENU = "SUPPRIMER_MENU";
     public static final String ACTION_AFFECTER_MENU = "AFFECTER_MENU";
     public static final String ACTION_AJOUTER_RESTAURATION = "AJOUTER_RESTAURATION";
+    public static final String ACTION_AFFECTER_RESTAURATION_MAISON = "AFFECTER_RESTAURATION_MAISON";
     
     //-----------------------------
     // ATTRIBUTS
@@ -29,10 +30,13 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     private JTable tableMenus;
     private DefaultTableModel modeleTableMenus;
     
+    // Formulaire restauration
     private JTextField champNomRestauration;
     private JTextField champCapaciteRestauration;
     private JComboBox<String> comboTypeRestauration;
+    private JComboBox<String> comboMaisonsPourRestauration;
     private JButton boutonAjouterRestauration;
+    private JButton boutonAffecterRestaurationMaison;
     
     // Formulaire menu
     private JTextField champNomMenu;
@@ -41,6 +45,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     private JTextField champDessert;
     private JTextField champPrix;
     private JComboBox<String> comboRestaurations;
+    private JComboBox<String> comboTousLesMenus; // Nouvelle ComboBox pour tous les menus
     
     // Boutons
     private JButton boutonAjouterMenu;
@@ -64,7 +69,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     
     private void initialiserComposants() {
         // Tableau des restaurations
-        String[] colonnesRestaurations = {"Nom", "Type", "Capacité", "Nb Menus"};
+        String[] colonnesRestaurations = {"Nom", "Type", "Capacité", "Nb Menus", "Maison"};
         modeleTableRestaurations = new DefaultTableModel(colonnesRestaurations, 0) {
             @Override
             public boolean isCellEditable(int row, int column) {
@@ -87,15 +92,16 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         tableMenus = new JTable(modeleTableMenus);
         tableMenus.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         
-        // Champs du formulaire
+        // Champs du formulaire menu
         champNomMenu = new JTextField(15);
         champEntree = new JTextField(15);
         champPlat = new JTextField(15);
         champDessert = new JTextField(15);
         champPrix = new JTextField(15);
         comboRestaurations = new JComboBox<>();
+        comboTousLesMenus = new JComboBox<>(); // Initialisation de la nouvelle ComboBox
         
-        // Boutons
+        // Boutons menu
         boutonAjouterMenu = new JButton("Ajouter Menu");
         boutonSupprimerMenu = new JButton("Supprimer Menu");
         boutonAffecterMenu = new JButton("Affecter Menu");
@@ -105,12 +111,15 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         boutonSupprimerMenu.setActionCommand(ACTION_SUPPRIMER_MENU);
         boutonAffecterMenu.setActionCommand(ACTION_AFFECTER_MENU);
         
-        
+        // Champs du formulaire restauration
         champNomRestauration = new JTextField(15);
         champCapaciteRestauration = new JTextField(15);
         comboTypeRestauration = new JComboBox<>(new String[]{"RestoU", "Cafétéria"});
+        comboMaisonsPourRestauration = new JComboBox<>();
         boutonAjouterRestauration = new JButton("Ajouter Restauration");
+        boutonAffecterRestaurationMaison = new JButton("Affecter à Maison");
         boutonAjouterRestauration.setActionCommand(ACTION_AJOUTER_RESTAURATION);
+        boutonAffecterRestaurationMaison.setActionCommand(ACTION_AFFECTER_RESTAURATION_MAISON);
     }
     
     private void configurerLayout() {
@@ -128,7 +137,7 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         JPanel panneauRestaurations = new JPanel(new BorderLayout());
         panneauRestaurations.setBorder(BorderFactory.createTitledBorder("Restaurations"));
         JScrollPane scrollRestaurations = new JScrollPane(tableRestaurations);
-        scrollRestaurations.setPreferredSize(new Dimension(400, 200));
+        scrollRestaurations.setPreferredSize(new Dimension(500, 200));
         panneauRestaurations.add(scrollRestaurations, BorderLayout.CENTER);
         
         // Panneau menus de la restauration sélectionnée
@@ -140,12 +149,12 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         
         splitRestaurations.setLeftComponent(panneauRestaurations);
         splitRestaurations.setRightComponent(panneauMenusResto);
-        splitRestaurations.setDividerLocation(400);
+        splitRestaurations.setDividerLocation(500);
         
         panneauHaut.add(splitRestaurations, BorderLayout.CENTER);
         
-        // Partie basse - Formulaire d'ajout de menu
-        JPanel panneauBas = creerFormulaireMenu();
+        // Partie basse - Formulaires
+        JPanel panneauBas = creerPanneauFormulaires();
         
         splitPrincipal.setTopComponent(panneauHaut);
         splitPrincipal.setBottomComponent(panneauBas);
@@ -155,38 +164,68 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         add(splitPrincipal, BorderLayout.CENTER);
     }
     
+    private JPanel creerPanneauFormulaires() {
+        JPanel panneauPrincipal = new JPanel(new GridLayout(1, 2, 10, 0));
+        
+        // Panneau gauche - Gestion des restaurations
+        JPanel panneauGaucheRestauration = creerFormulaireRestauration();
+        
+        // Panneau droit - Gestion des menus
+        JPanel panneauDroitMenu = creerFormulaireMenu();
+        
+        panneauPrincipal.add(panneauGaucheRestauration);
+        panneauPrincipal.add(panneauDroitMenu);
+        
+        return panneauPrincipal;
+    }
+    
+    private JPanel creerFormulaireRestauration() {
+        JPanel formulaireRestaurant = new JPanel();
+        formulaireRestaurant.setLayout(new BoxLayout(formulaireRestaurant, BoxLayout.Y_AXIS));
+        formulaireRestaurant.setBorder(BorderFactory.createTitledBorder("Gestion des Restaurations"));
+        
+        JPanel panneauChamps = new JPanel(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(5, 5, 5, 5);
+        
+        // Nom
+        gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
+        panneauChamps.add(new JLabel("Nom:"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
+        panneauChamps.add(champNomRestauration, gbc);
+        
+        // Capacité
+        gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.NONE;
+        panneauChamps.add(new JLabel("Capacité:"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
+        panneauChamps.add(champCapaciteRestauration, gbc);
+        
+        // Type
+        gbc.gridx = 0; gbc.gridy = 2; gbc.fill = GridBagConstraints.NONE;
+        panneauChamps.add(new JLabel("Type:"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
+        panneauChamps.add(comboTypeRestauration, gbc);
+        
+        // Maison
+        gbc.gridx = 0; gbc.gridy = 3; gbc.fill = GridBagConstraints.NONE;
+        panneauChamps.add(new JLabel("Maison:"), gbc);
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
+        panneauChamps.add(comboMaisonsPourRestauration, gbc);
+        
+        formulaireRestaurant.add(panneauChamps);
+        formulaireRestaurant.add(Box.createVerticalStrut(10));
+        
+        // Boutons
+        JPanel panneauBoutons = new JPanel(new FlowLayout());
+        panneauBoutons.add(boutonAjouterRestauration);
+        panneauBoutons.add(boutonAffecterRestaurationMaison);
+        
+        formulaireRestaurant.add(panneauBoutons);
+        
+        return formulaireRestaurant;
+    }
+    
     private JPanel creerFormulaireMenu() {
-        JPanel formulairePrincipal = new JPanel();
-        formulairePrincipal.setLayout(new BoxLayout(formulairePrincipal, BoxLayout.Y_AXIS));
-        
-        // Formulaire restauration
-        JPanel formulaireRestaurant = new JPanel(new GridBagLayout());
-        formulaireRestaurant.setBorder(BorderFactory.createTitledBorder("Ajouter une Restauration"));
-        
-        GridBagConstraints gbcResto = new GridBagConstraints();
-        gbcResto.insets = new Insets(5, 5, 5, 5);
-        
-        gbcResto.gridx = 0; gbcResto.gridy = 0;
-        formulaireRestaurant.add(new JLabel("Nom:"), gbcResto);
-        gbcResto.gridx = 1;
-        formulaireRestaurant.add(champNomRestauration, gbcResto);
-        
-        gbcResto.gridx = 0; gbcResto.gridy = 1;
-        formulaireRestaurant.add(new JLabel("Capacité:"), gbcResto);
-        gbcResto.gridx = 1;
-        formulaireRestaurant.add(champCapaciteRestauration, gbcResto);
-        
-        gbcResto.gridx = 0; gbcResto.gridy = 2;
-        formulaireRestaurant.add(new JLabel("Type:"), gbcResto);
-        gbcResto.gridx = 1;
-        formulaireRestaurant.add(comboTypeRestauration, gbcResto);
-        
-        gbcResto.gridx = 0; gbcResto.gridy = 3; gbcResto.gridwidth = 2;
-        formulaireRestaurant.add(boutonAjouterRestauration, gbcResto);
-        
-        formulairePrincipal.add(formulaireRestaurant);
-        formulairePrincipal.add(Box.createVerticalStrut(10));
-    	
         JPanel formulaire = new JPanel();
         formulaire.setLayout(new BoxLayout(formulaire, BoxLayout.Y_AXIS));
         formulaire.setBorder(BorderFactory.createTitledBorder("Gestion des Menus"));
@@ -196,25 +235,23 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         
-        // Ligne 1 - Nom du menu
+        // Ligne 1 - Nom du menu et Prix
         gbc.gridx = 0; gbc.gridy = 0; gbc.anchor = GridBagConstraints.WEST;
         panneauChamps.add(new JLabel("Nom du menu:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         panneauChamps.add(champNomMenu, gbc);
         
-        // Ligne 1 suite - Prix
         gbc.gridx = 2; gbc.fill = GridBagConstraints.NONE;
         panneauChamps.add(new JLabel("Prix:"), gbc);
         gbc.gridx = 3; gbc.fill = GridBagConstraints.HORIZONTAL;
         panneauChamps.add(champPrix, gbc);
         
-        // Ligne 2 - Entrée
+        // Ligne 2 - Entrée et Plat
         gbc.gridx = 0; gbc.gridy = 1; gbc.fill = GridBagConstraints.NONE;
         panneauChamps.add(new JLabel("Entrée:"), gbc);
         gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
         panneauChamps.add(champEntree, gbc);
         
-        // Ligne 2 suite - Plat
         gbc.gridx = 2; gbc.fill = GridBagConstraints.NONE;
         panneauChamps.add(new JLabel("Plat:"), gbc);
         gbc.gridx = 3; gbc.fill = GridBagConstraints.HORIZONTAL;
@@ -223,16 +260,31 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         // Ligne 3 - Dessert
         gbc.gridx = 0; gbc.gridy = 2; gbc.fill = GridBagConstraints.NONE;
         panneauChamps.add(new JLabel("Dessert:"), gbc);
-        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.gridx = 1; gbc.fill = GridBagConstraints.HORIZONTAL; gbc.gridwidth = 3;
         panneauChamps.add(champDessert, gbc);
         
-        // Ligne 3 suite - Restauration
-        gbc.gridx = 2; gbc.fill = GridBagConstraints.NONE;
-        panneauChamps.add(new JLabel("Restauration:"), gbc);
-        gbc.gridx = 3; gbc.fill = GridBagConstraints.HORIZONTAL;
-        panneauChamps.add(comboRestaurations, gbc);
-        
         formulaire.add(panneauChamps);
+        formulaire.add(Box.createVerticalStrut(10));
+        
+        // Section affectation avec ComboBox des menus existants
+        JPanel panneauAffectation = new JPanel(new GridBagLayout());
+        panneauAffectation.setBorder(BorderFactory.createTitledBorder("Affectation Menu"));
+        GridBagConstraints gbcAffect = new GridBagConstraints();
+        gbcAffect.insets = new Insets(5, 5, 5, 5);
+        
+        // Menu à affecter
+        gbcAffect.gridx = 0; gbcAffect.gridy = 0; gbcAffect.anchor = GridBagConstraints.WEST;
+        panneauAffectation.add(new JLabel("Menu:"), gbcAffect);
+        gbcAffect.gridx = 1; gbcAffect.fill = GridBagConstraints.HORIZONTAL;
+        panneauAffectation.add(comboTousLesMenus, gbcAffect);
+        
+        // Restauration cible
+        gbcAffect.gridx = 0; gbcAffect.gridy = 1; gbcAffect.fill = GridBagConstraints.NONE;
+        panneauAffectation.add(new JLabel("Restauration:"), gbcAffect);
+        gbcAffect.gridx = 1; gbcAffect.fill = GridBagConstraints.HORIZONTAL;
+        panneauAffectation.add(comboRestaurations, gbcAffect);
+        
+        formulaire.add(panneauAffectation);
         formulaire.add(Box.createVerticalStrut(10));
         
         // Panneau des boutons
@@ -258,12 +310,14 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         
         for (Restauration resto : restaurations) {
             String type = (resto instanceof RestoU) ? "RestoU" : "Cafétéria";
+            String nomMaison = (resto.getSaMaison() != null) ? resto.getSaMaison().getNom() : "Non affectée";
             
             Object[] ligne = {
                 resto.getNom(),
                 type,
                 resto.getCapacite(),
-                resto.getSesMenus().size()
+                resto.getSesMenus().size(),
+                nomMaison
             };
             modeleTableRestaurations.addRow(ligne);
         }
@@ -302,6 +356,30 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
     }
     
     /**
+     * Met à jour la liste de tous les menus dans la combobox
+     */
+    public void mettreAJourComboTousLesMenus(ArrayList<Menu> menus) {
+        comboTousLesMenus.removeAllItems();
+        comboTousLesMenus.addItem("Sélectionner un menu");
+        
+        for (Menu menu : menus) {
+            comboTousLesMenus.addItem(menu.getNom() + " - " + String.format("%.2f €", menu.getPrix()));
+        }
+    }
+    
+    /**
+     * Met à jour la liste des maisons dans la combobox
+     */
+    public void mettreAJourComboMaisons(ArrayList<Maison> maisons) {
+        comboMaisonsPourRestauration.removeAllItems();
+        comboMaisonsPourRestauration.addItem("Sélectionner une maison");
+        
+        for (Maison maison : maisons) {
+            comboMaisonsPourRestauration.addItem(maison.getNom());
+        }
+    }
+    
+    /**
      * Vide le formulaire
      */
     public void viderFormulaire() {
@@ -310,7 +388,12 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         champPlat.setText("");
         champDessert.setText("");
         champPrix.setText("");
-        comboRestaurations.setSelectedIndex(0);
+        if (comboRestaurations.getItemCount() > 0) {
+            comboRestaurations.setSelectedIndex(0);
+        }
+        if (comboTousLesMenus.getItemCount() > 0) {
+            comboTousLesMenus.setSelectedIndex(0);
+        }
     }
     
     /**
@@ -335,12 +418,6 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
             Double.parseDouble(champPrix.getText().trim());
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Le prix doit être un nombre valide", 
-                "Erreur", JOptionPane.ERROR_MESSAGE);
-            return false;
-        }
-        
-        if (comboRestaurations.getSelectedIndex() == 0) {
-            JOptionPane.showMessageDialog(this, "Veuillez sélectionner une restauration", 
                 "Erreur", JOptionPane.ERROR_MESSAGE);
             return false;
         }
@@ -390,6 +467,10 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         return comboRestaurations;
     }
     
+    public JComboBox<String> getComboTousLesMenus() {
+        return comboTousLesMenus;
+    }
+    
     public JButton getBoutonAjouterMenu() {
         return boutonAjouterMenu;
     }
@@ -410,10 +491,29 @@ public class VueGestionRestaurations extends JPanel implements InterfaceVue {
         return tableMenus;
     }
     
-    public JTextField getChampNomRestauration() { return champNomRestauration; }
-    public JTextField getChampCapaciteRestauration() { return champCapaciteRestauration; }
-    public JComboBox<String> getComboTypeRestauration() { return comboTypeRestauration; }
-    public JButton getBoutonAjouterRestauration() { return boutonAjouterRestauration; }
+    public JTextField getChampNomRestauration() { 
+        return champNomRestauration; 
+    }
+    
+    public JTextField getChampCapaciteRestauration() { 
+        return champCapaciteRestauration; 
+    }
+    
+    public JComboBox<String> getComboTypeRestauration() { 
+        return comboTypeRestauration; 
+    }
+    
+    public JComboBox<String> getComboMaisonsPourRestauration() {
+        return comboMaisonsPourRestauration;
+    }
+    
+    public JButton getBoutonAjouterRestauration() { 
+        return boutonAjouterRestauration; 
+    }
+    
+    public JButton getBoutonAffecterRestaurationMaison() {
+        return boutonAffecterRestaurationMaison;
+    }
     
     //-----------------------------
     // IMPLÉMENTATION INTERFACE

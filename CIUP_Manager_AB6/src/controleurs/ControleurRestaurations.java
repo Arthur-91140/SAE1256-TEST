@@ -3,6 +3,7 @@ package controleurs;
 import javax.swing.*;
 import javax.swing.event.*;
 import java.awt.event.*;
+import java.util.ArrayList;
 import modeles.*;
 import vues.*;
 import citeU.*;
@@ -39,11 +40,11 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         vue.getBoutonAjouterMenu().addActionListener(this);
         vue.getBoutonSupprimerMenu().addActionListener(this);
         vue.getBoutonAffecterMenu().addActionListener(this);
+        vue.getBoutonAjouterRestauration().addActionListener(this);
+        vue.getBoutonAffecterRestaurationMaison().addActionListener(this);
         
         // Écouteur pour la sélection dans le tableau des restaurations
         vue.getTableRestaurations().getSelectionModel().addListSelectionListener(this);
-        
-        vue.getBoutonAjouterRestauration().addActionListener(this);
     }
     
     //-----------------------------
@@ -67,7 +68,9 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             case VueGestionRestaurations.ACTION_AJOUTER_RESTAURATION:
                 ajouterRestauration();
                 break;
-
+            case VueGestionRestaurations.ACTION_AFFECTER_RESTAURATION_MAISON:
+                affecterRestaurationMaison();
+                break;
         }
     }
     
@@ -101,15 +104,6 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         
             Menu nouveauMenu = new Menu(nom, entree, plat, dessert, prix);
             modele.ajouterMenu(nouveauMenu);
-        
-            // Affecter le menu à la restauration sélectionnée
-            int indexRestaurant = vue.getComboRestaurations().getSelectedIndex();
-            if (indexRestaurant > 0) { // > 0 car index 0 = "Sélectionner une restauration"
-                Restauration restauration = modele.getRestaurations().get(indexRestaurant - 1);
-                restauration.ajouteMenu(nouveauMenu);
-            
-                modele.notifierObservateurs();
-            }
         
             vue.viderFormulaire();
             mettreAJourVue();
@@ -162,16 +156,17 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
     }
     
     private void affecterMenu() {
-        int ligneMenu = vue.getMenuSelectionne();
-        if (ligneMenu < 0) {
+        int indexMenu = vue.getComboTousLesMenus().getSelectedIndex();
+        int indexRestaurant = vue.getComboRestaurations().getSelectedIndex();
+        
+        if (indexMenu <= 0) {
             JOptionPane.showMessageDialog(vue, 
-                "Veuillez sélectionner un menu dans la liste", 
+                "Veuillez sélectionner un menu", 
                 "Erreur", 
                 JOptionPane.WARNING_MESSAGE);
             return;
         }
         
-        int indexRestaurant = vue.getComboRestaurations().getSelectedIndex();
         if (indexRestaurant <= 0) {
             JOptionPane.showMessageDialog(vue, 
                 "Veuillez sélectionner une restauration", 
@@ -180,23 +175,11 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             return;
         }
         
-        // Récupérer le menu depuis la restauration actuellement sélectionnée
-        int ligneRestauration = vue.getRestaurationSelectionnee();
-        if (ligneRestauration < 0) {
-            JOptionPane.showMessageDialog(vue, 
-                "Veuillez d'abord sélectionner une restauration dans le tableau", 
-                "Erreur", 
-                JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-        
-        Restauration restaurationSource = modele.getRestaurations().get(ligneRestauration);
-        Menu menu = restaurationSource.getSesMenus().get(ligneMenu);
-        
-        Restauration restaurationCible = modele.getRestaurations().get(indexRestaurant - 1);
+        Menu menu = modele.getMenus().get(indexMenu - 1);
+        Restauration restauration = modele.getRestaurations().get(indexRestaurant - 1);
         
         // Vérifier si le menu n'est pas déjà affecté à cette restauration
-        if (restaurationCible.getSesMenus().contains(menu)) {
+        if (restauration.getSesMenus().contains(menu)) {
             JOptionPane.showMessageDialog(vue, 
                 "Ce menu est déjà affecté à cette restauration", 
                 "Information", 
@@ -204,14 +187,14 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             return;
         }
         
-        // Affecter le menu à la restauration cible
-        restaurationCible.ajouteMenu(menu);
+        // Affecter le menu à la restauration
+        restauration.ajouteMenu(menu);
         
         modele.notifierObservateurs();
         mettreAJourVue();
         
         JOptionPane.showMessageDialog(vue, 
-            "Menu affecté avec succès à " + restaurationCible.getNom() + " !", 
+            "Menu affecté avec succès à " + restauration.getNom() + " !", 
             "Succès", 
             JOptionPane.INFORMATION_MESSAGE);
     }
@@ -241,10 +224,20 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
             
             modele.ajouterRestauration(nouvelleRestauration);
             
+            // Affecter directement à une maison si sélectionnée
+            int indexMaison = vue.getComboMaisonsPourRestauration().getSelectedIndex();
+            if (indexMaison > 0) {
+                Maison maison = obtenirMaisonParIndex(indexMaison - 1);
+                if (maison != null) {
+                    maison.ajouteRestauration(nouvelleRestauration);
+                }
+            }
+            
             // Vider les champs
             vue.getChampNomRestauration().setText("");
             vue.getChampCapaciteRestauration().setText("");
             vue.getComboTypeRestauration().setSelectedIndex(0);
+            vue.getComboMaisonsPourRestauration().setSelectedIndex(0);
             
             mettreAJourVue();
             
@@ -261,6 +254,68 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
         }
     }
     
+    private void affecterRestaurationMaison() {
+        int ligneRestauration = vue.getRestaurationSelectionnee();
+        int indexMaison = vue.getComboMaisonsPourRestauration().getSelectedIndex();
+        
+        if (ligneRestauration < 0) {
+            JOptionPane.showMessageDialog(vue, 
+                "Veuillez sélectionner une restauration dans le tableau", 
+                "Erreur", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        if (indexMaison <= 0) {
+            JOptionPane.showMessageDialog(vue, 
+                "Veuillez sélectionner une maison", 
+                "Erreur", 
+                JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        
+        Restauration restauration = modele.getRestaurations().get(ligneRestauration);
+        Maison maison = obtenirMaisonParIndex(indexMaison - 1);
+        
+        if (maison == null) {
+            JOptionPane.showMessageDialog(vue, 
+                "Erreur lors de la sélection de la maison", 
+                "Erreur", 
+                JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        // Retirer de l'ancienne maison si nécessaire
+        if (restauration.getSaMaison() != null) {
+            restauration.getSaMaison().retireRestauration(restauration);
+        }
+        
+        // Affecter à la nouvelle maison
+        maison.ajouteRestauration(restauration);
+        
+        modele.notifierObservateurs();
+        mettreAJourVue();
+        
+        JOptionPane.showMessageDialog(vue, 
+            "Restauration affectée avec succès à " + maison.getNom() + " !", 
+            "Succès", 
+            JOptionPane.INFORMATION_MESSAGE);
+    }
+    
+    /**
+     * Obtient une maison par son index dans la liste combinée
+     */
+    private Maison obtenirMaisonParIndex(int index) {
+        ArrayList<Maison> toutesLesMaisons = new ArrayList<>();
+        toutesLesMaisons.addAll(modele.getMaisonsEtudiants());
+        toutesLesMaisons.addAll(modele.getMaisonsInternationales());
+        
+        if (index >= 0 && index < toutesLesMaisons.size()) {
+            return toutesLesMaisons.get(index);
+        }
+        return null;
+    }
+    
     //-----------------------------
     // MÉTHODES PUBLIQUES
     //-----------------------------
@@ -271,6 +326,13 @@ public class ControleurRestaurations implements ActionListener, ListSelectionLis
     public void mettreAJourVue() {
         vue.mettreAJourTableauRestaurations(modele.getRestaurations());
         vue.mettreAJourComboRestaurations(modele.getRestaurations());
+        vue.mettreAJourComboTousLesMenus(modele.getMenus());
+        
+        // Créer une liste combinée de toutes les maisons
+        ArrayList<Maison> toutesLesMaisons = new ArrayList<>();
+        toutesLesMaisons.addAll(modele.getMaisonsEtudiants());
+        toutesLesMaisons.addAll(modele.getMaisonsInternationales());
+        vue.mettreAJourComboMaisons(toutesLesMaisons);
         
         // Mettre à jour les menus si une restauration est sélectionnée
         int ligneSelectionnee = vue.getRestaurationSelectionnee();

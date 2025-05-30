@@ -86,21 +86,25 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
             
             // Ajout des restaurations aux maisons
             maisonInt.ajouteRestauration(resto1);
-            maisonInt.ajouteRestauration(resto2);
+            maisonFrance.ajouteRestauration(resto2); // Ajout à une maison d'étudiants aussi
             
             // Création de menus
             citeU.Menu menu1 = new citeU.Menu("Menu Étudiant", "Salade composée", 
                 "Saucisses lentilles", "Crème au citron", 3.30);
             citeU.Menu menu2 = new citeU.Menu("Menu Gourmet", "Friand au fromage", 
                 "Burger frites", "Glace fraise", 4.40);
+            citeU.Menu menu3 = new citeU.Menu("Menu Végétarien", "Soupe de légumes",
+                "Lasagnes aux légumes", "Fruits de saison", 3.80);
             
             menus.add(menu1);
             menus.add(menu2);
+            menus.add(menu3);
             
             // Association menus-restaurants
             resto1.ajouteMenu(menu1);
             resto1.ajouteMenu(menu2);
             resto2.ajouteMenu(menu1);
+            resto2.ajouteMenu(menu3);
             
             sauvegarderDonnees();
         }
