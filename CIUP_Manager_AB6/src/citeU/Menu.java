@@ -2,8 +2,10 @@ package citeU;
 
 import java.util.*;
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Menu {
+public class Menu implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	private ArrayList<Restauration> saRestauration;
 	private String nom;
