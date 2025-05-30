@@ -23,7 +23,9 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
     private ArrayList<citeU.MaisonInternationale> maisonsInternationales;
     private ArrayList<citeU.Restauration> restaurations;
     private ArrayList<citeU.Menu> menus;
-    private ControleurPrincipal controleurPrincipal;
+    
+    // Transient pour éviter la sérialisation du contrôleur
+    private transient ControleurPrincipal controleurPrincipal;
     
     //-----------------------------
     // CONSTRUCTEUR
@@ -195,14 +197,24 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
         File fichier = new File(FICHIER_SAUVEGARDE);
         if (fichier.exists()) {
             try (ObjectInputStream ois = new ObjectInputStream(new FileInputStream(fichier))) {
-                GestionnaireCIUP donnees = (GestionnaireCIUP) ois.readObject();
-                this.etudiants = donnees.etudiants;
-                this.maisonsEtudiants = donnees.maisonsEtudiants;
-                this.maisonsInternationales = donnees.maisonsInternationales;
-                this.restaurations = donnees.restaurations;
-                this.menus = donnees.menus;
+                // Lire uniquement les données, pas l'objet complet
+                Object obj = ois.readObject();
+                if (obj instanceof GestionnaireCIUP) {
+                    GestionnaireCIUP donnees = (GestionnaireCIUP) obj;
+                    this.etudiants = donnees.etudiants != null ? donnees.etudiants : new ArrayList<>();
+                    this.maisonsEtudiants = donnees.maisonsEtudiants != null ? donnees.maisonsEtudiants : new ArrayList<>();
+                    this.maisonsInternationales = donnees.maisonsInternationales != null ? donnees.maisonsInternationales : new ArrayList<>();
+                    this.restaurations = donnees.restaurations != null ? donnees.restaurations : new ArrayList<>();
+                    this.menus = donnees.menus != null ? donnees.menus : new ArrayList<>();
+                }
             } catch (Exception e) {
                 System.err.println("Erreur lors du chargement: " + e.getMessage());
+                // Initialiser avec des listes vides en cas d'erreur
+                etudiants = new ArrayList<>();
+                maisonsEtudiants = new ArrayList<>();
+                maisonsInternationales = new ArrayList<>();
+                restaurations = new ArrayList<>();
+                menus = new ArrayList<>();
             }
         }
     }
@@ -213,6 +225,7 @@ public class GestionnaireCIUP implements InterfaceModele, Serializable {
             oos.writeObject(this);
         } catch (Exception e) {
             System.err.println("Erreur lors de la sauvegarde: " + e.getMessage());
+            e.printStackTrace();
         }
     }
     
